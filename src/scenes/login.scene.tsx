@@ -1,5 +1,10 @@
+import { AppLayout } from '@/layouts';
 import { LoginComponent } from '@/pods/login';
 
 export const LoginScene: React.FC = () => {
-  return <LoginComponent />;
+  return (
+    <AppLayout>
+      <LoginComponent />
+    </AppLayout>
+  );
 };

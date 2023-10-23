@@ -1,5 +1,8 @@
 import { css } from '@emotion/css';
 
-export const content = css`
-  margin: 1rem;
+export const root = css`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 `;
+
