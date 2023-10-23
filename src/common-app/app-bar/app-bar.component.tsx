@@ -25,14 +25,15 @@ export const AppBarComponent: React.FC = () => {
           onClick={() => {
             navigate(routes.bookList);
           }}
+          aria-label="Ir a la lista de libros"
         >
           <HomeIcon fontSize="large" />
         </IconButton>
         <div>
-          <IconButton color="inherit">
+          <IconButton color="inherit" aria-label="Abrir menú de usuario">
             <UserIcon fontSize="large" />
           </IconButton>
-          <IconButton color="inherit" onClick={handleClick}>
+          <IconButton color="inherit" onClick={handleClick} aria-label="Cerrar sesión">
             <LogoutIcon fontSize="large" />
           </IconButton>
         </div>
