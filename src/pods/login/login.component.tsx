@@ -1,11 +1,15 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { routes } from '@/core/router';
 import * as classes from './login.styles';
 
 export const LoginComponent: React.FC = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = e => {
     e.preventDefault();
-    // Agregar lógica de inicio de sesión aquí
+    navigate(routes.bookList);
   };
 
   return (

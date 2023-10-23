@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import UserIcon from '@mui/icons-material/Person';
@@ -10,7 +10,6 @@ import * as classes from './app-bar.styles';
 
 export const AppBarComponent: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleClick = async () => {
     await api.logout();
