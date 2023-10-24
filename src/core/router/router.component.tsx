@@ -7,10 +7,11 @@ export const RouterComponent: React.FC = () => {
   return (
     <HashRouter>
       <Routes>
-        <Route path={switchRoutes.root} element={<LoginScene />} />
-        <Route path={switchRoutes.dashboard} element={<DasboardScene />} />
+        <Route path={switchRoutes.root} element={<BookListScene />} />
         <Route path={switchRoutes.bookList} element={<BookListScene />} />
-        <Route path="*" element={<LoginScene />}></Route>
+        <Route path={switchRoutes.login} element={<LoginScene />} />
+        <Route path={switchRoutes.dashboard} element={<DasboardScene />} />
+        <Route path="*" element={<BookListScene />}></Route>
       </Routes>
     </HashRouter>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import UserIcon from '@mui/icons-material/Person';
@@ -19,19 +19,13 @@ export const AppBarComponent: React.FC = () => {
   return (
     <AppBar position="sticky">
       <Toolbar className={classes.root} variant="dense">
-        <IconButton
-          color="inherit"
-          onClick={() => {
-            navigate(switchRoutes.dashboard);
-          }}
-          aria-label="Ir a la página principal"
-        >
+        <Link className={classes.link} to={switchRoutes.root} aria-label="Navegar a página principal">
           <HomeIcon fontSize="large" />
-        </IconButton>
-        <div>
-          <IconButton color="inherit" aria-label="Abrir menú de usuario">
+        </Link>
+        <div className={classes.rightContainer}>
+          <Link className={classes.link} to={switchRoutes.login} aria-label="Navegar a página de login">
             <UserIcon fontSize="large" />
-          </IconButton>
+          </Link>
           <IconButton color="inherit" onClick={handleClick} aria-label="Cerrar sesión">
             <LogoutIcon fontSize="large" />
           </IconButton>
