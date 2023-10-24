@@ -4,7 +4,7 @@ import { AppBar, Toolbar, IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import UserIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/ExitToApp';
-import { routes } from '@/core/router';
+import { switchRoutes } from '@/core/router';
 import * as api from './api';
 import * as classes from './app-bar.styles';
 
@@ -13,7 +13,7 @@ export const AppBarComponent: React.FC = () => {
 
   const handleClick = async () => {
     await api.logout();
-    navigate(routes.root);
+    navigate(switchRoutes.root);
   };
 
   return (
@@ -22,9 +22,9 @@ export const AppBarComponent: React.FC = () => {
         <IconButton
           color="inherit"
           onClick={() => {
-            navigate(routes.dashboard);
+            navigate(switchRoutes.dashboard);
           }}
-          aria-label="Ir a la lista de libros"
+          aria-label="Ir a la página principal"
         >
           <HomeIcon fontSize="large" />
         </IconButton>

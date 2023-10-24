@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
-import { routes } from '@/core/router';
+import { switchRoutes } from '@/core/router';
 import * as classes from './login.styles';
 
 export const LoginComponent: React.FC = () => {
@@ -9,7 +9,7 @@ export const LoginComponent: React.FC = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    navigate(routes.dashboard);
+    navigate(switchRoutes.dashboard);
   };
 
   return (
