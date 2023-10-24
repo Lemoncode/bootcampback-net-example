@@ -48,8 +48,22 @@ export const card = css`
   }
 `;
 
-export const cardImage = css`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+export const link = css`
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  padding: ${theme.spacing(0.5)} ${theme.spacing(0.75)};
+  border-radius: 4px;
+
+  :visited {
+    color: inherit;
+  }
+
+  :hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
 `;

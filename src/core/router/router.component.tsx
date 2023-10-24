@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { LoginScene, DasboardScene, BookListScene } from '@/scenes';
+import { LoginScene, DashboardScene, BookListScene, BookScene } from '@/scenes';
 import { switchRoutes } from './routes';
 
 export const RouterComponent: React.FC = () => {
@@ -9,8 +9,9 @@ export const RouterComponent: React.FC = () => {
       <Routes>
         <Route path={switchRoutes.root} element={<BookListScene />} />
         <Route path={switchRoutes.bookList} element={<BookListScene />} />
+        <Route path={switchRoutes.bookDetail(':id')} element={<BookScene />} />
         <Route path={switchRoutes.login} element={<LoginScene />} />
-        <Route path={switchRoutes.dashboard} element={<DasboardScene />} />
+        <Route path={switchRoutes.dashboard} element={<DashboardScene />} />
         <Route path="*" element={<BookListScene />}></Route>
       </Routes>
     </HashRouter>

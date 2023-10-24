@@ -13,7 +13,7 @@ export const LoginComponent: React.FC = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} aria-label="Inicio de Sesión">
       <Paper className={classes.paper}>
         <Typography variant="h3" component="h1" align="center">
           Iniciar Sesión

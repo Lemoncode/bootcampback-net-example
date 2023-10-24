@@ -3,11 +3,7 @@ import { BookList } from './book-list.component';
 import { mapBookListFromApiToVm } from './book-list.mapppers';
 import * as api from './api';
 
-interface Props {
-  className?: string;
-}
-
-export const BookListContainer: React.FC<Props> = props => {
+export const BookListContainer: React.FC = () => {
   const [bookList, setBookList] = React.useState([]);
 
   const loadData = async () => {
@@ -19,6 +15,5 @@ export const BookListContainer: React.FC<Props> = props => {
     loadData();
   }, []);
 
-  const { className } = props;
-  return <BookList className={className} bookList={bookList} />;
+  return <BookList bookList={bookList} />;
 };

@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { switchRoutes } from '@/core/router';
 import { Book } from './api';
 import * as classes from './book-list.styles';
 
@@ -11,17 +13,14 @@ export const BookList: React.FC<Props> = props => {
   const { bookList } = props;
 
   return (
-    <div className={classes.root}>
-      <Typography className={classes.title} variant="h1" component={'h1'} aria-label="tienda online, listado de libros">
+    //
+    <div className={classes.root} role="region">
+      <Typography className={classes.title} variant="h1" component="h1" aria-label="Tienda online, listado de libros">
         Libros
       </Typography>
-      <div className={classes.cardContainer}>
+      <div className={classes.cardContainer} role="list">
         {bookList.map(book => (
-          // <ul key={book.id} className={classes.container}>
-          //   <img src={book.image} alt={book.title} />
-          //   <h3>{book.title}</h3>
-          // </ul>
-          <Card className={classes.card}>
+          <Card className={classes.card} component="article" key={book.id} role="listitem" tabIndex={0}>
             <CardMedia image={book.image} title={`Portada del libro ${book.title}`} />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -29,8 +28,18 @@ export const BookList: React.FC<Props> = props => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Compartir</Button>
-              <Button size="small">Leer más</Button>
+              <Button size="small" aria-label={`Compartir enlace del libro ${book.title}`} role="button">
+                Compartir
+              </Button>
+              <Link
+                className={classes.link}
+                to={switchRoutes.bookDetail(book.id)}
+                onClick={() => console.log(switchRoutes.bookDetail(book.id))}
+                role="link"
+                aria-label={`Ver detalle del libro ${book.title}`}
+              >
+                Leer más
+              </Link>
             </CardActions>
           </Card>
         ))}

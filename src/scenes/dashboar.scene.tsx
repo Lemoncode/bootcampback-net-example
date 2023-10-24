@@ -2,7 +2,7 @@ import React from 'react';
 import { AppLayout } from '@/layouts';
 import { DashboardComponent } from '@/pods/dashboard';
 
-export const DasboardScene: React.FC = () => {
+export const DashboardScene: React.FC = () => {
   return (
     <AppLayout>
       <DashboardComponent />
