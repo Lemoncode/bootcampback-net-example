@@ -22,7 +22,7 @@ export const AppBarComponent: React.FC = () => {
         <IconButton
           color="inherit"
           onClick={() => {
-            navigate(routes.bookList);
+            navigate(routes.dashboard);
           }}
           aria-label="Ir a la lista de libros"
         >

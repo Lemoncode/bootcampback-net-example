@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { BookListScene, LoginScene } from '@/scenes';
+import { LoginScene, DasboardScene, BookListScene } from '@/scenes';
 import { routes } from './routes';
 
 export const RouterComponent: React.FC = () => {
@@ -8,6 +8,7 @@ export const RouterComponent: React.FC = () => {
     <HashRouter>
       <Routes>
         <Route path={routes.root} element={<LoginScene />} />
+        <Route path={routes.dashboard} element={<DasboardScene />} />
         <Route path={routes.bookList} element={<BookListScene />} />
       </Routes>
     </HashRouter>

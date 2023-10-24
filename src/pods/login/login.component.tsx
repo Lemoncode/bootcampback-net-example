@@ -9,7 +9,7 @@ export const LoginComponent: React.FC = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    navigate(routes.bookList);
+    navigate(routes.dashboard);
   };
 
   return (
