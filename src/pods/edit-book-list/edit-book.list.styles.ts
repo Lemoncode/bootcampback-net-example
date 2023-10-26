@@ -38,3 +38,11 @@ export const root = css`
     }
   }
 `;
+
+export const addBook = css`
+  align-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  color: ${theme.palette.primary.main};
+`;

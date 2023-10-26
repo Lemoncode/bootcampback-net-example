@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { switchRoutes } from '@/core/router';
 import { BookVm } from './edit-book-list.vm';
 import * as classes from './edit-book.list.styles';
@@ -37,7 +38,11 @@ export const EditBookListComponent: React.FC<Props> = props => {
     setFilteredBookList(filteredList);
   };
 
-  const handleEdit = (id: string) => {
+  const handleAddBook = () => {
+    navigate(switchRoutes.bookDetail('new'));
+  };
+
+  const handleEditBook = (id: string) => {
     navigate(switchRoutes.bookDetail(id));
   };
 
@@ -50,7 +55,18 @@ export const EditBookListComponent: React.FC<Props> = props => {
       <Typography variant="h1" component={'h1'}>
         Edición de libros
       </Typography>
-      <Input onChange={handleFilter} placeholder="Filtrar por título: E.j. El Hobbit" />
+      <Input
+        onChange={handleFilter}
+        placeholder="Filtrar por título..."
+        aria-label="Campo filtrar por título de libro"
+      />
+
+      <IconButton className={classes.addBook} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
+        <Typography variant="caption" component={'span'}>
+          Añadir libro
+        </Typography>
+        <AddCircleIcon />
+      </IconButton>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -67,7 +83,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
                 <TableCell tabIndex={1}>{book.title}</TableCell>
                 <TableCell tabIndex={1}>{book.authors.join(', ')}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(book.id)} aria-label="editar" size="large">
+                  <IconButton onClick={() => handleEditBook(book.id)} aria-label="editar" size="large">
                     <EditIcon />
                   </IconButton>
                   <IconButton aria-label="borrar" size="large">
