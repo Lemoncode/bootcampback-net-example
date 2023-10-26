@@ -1,1 +1,1 @@
-export * from './edit-book-list.component';
+export * from './edit-book-list.container';
