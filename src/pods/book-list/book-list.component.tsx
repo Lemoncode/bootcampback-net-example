@@ -34,7 +34,6 @@ export const BookList: React.FC<Props> = props => {
               <Link
                 className={classes.link}
                 to={switchRoutes.bookDetail(book.id)}
-                onClick={() => console.log(switchRoutes.bookDetail(book.id))}
                 role="link"
                 aria-label={`Ver detalle del libro ${book.title}`}
               >

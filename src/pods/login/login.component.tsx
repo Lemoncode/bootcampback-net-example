@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 import { switchRoutes } from '@/core/router';
 import * as classes from './login.styles';
