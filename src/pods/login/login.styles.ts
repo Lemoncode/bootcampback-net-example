@@ -6,10 +6,9 @@ export const root = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-grow: 1;
   gap: 32px;
-  height: 100%;
   padding: ${theme.spacing(6)};
-  background-color: ${theme.palette.secondary.main};
 `;
 
 export const paper = css`
