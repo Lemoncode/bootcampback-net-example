@@ -25,16 +25,17 @@ interface Props {
 
 export const EditBookListComponent: React.FC<Props> = props => {
   const { bookList } = props;
+  const [currentBookList, setCurrentBookList] = React.useState<BookVm[]>(bookList); // [1
   const [filteredBookList, setFilteredBookList] = React.useState(bookList);
   const navigate = useNavigate();
 
   const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     if (value === '') {
-      setFilteredBookList(bookList);
+      setFilteredBookList(currentBookList);
       return;
     }
-    const filteredList = filteredBookList.filter(book => book.title.toLowerCase().includes(value.toLowerCase()));
+    const filteredList = currentBookList.filter(book => book.title.toLowerCase().includes(value.toLowerCase()));
     setFilteredBookList(filteredList);
   };
 
@@ -46,8 +47,17 @@ export const EditBookListComponent: React.FC<Props> = props => {
     navigate(switchRoutes.bookDetail(id));
   };
 
+  const handleDeleteBook = (id: string) => {
+    const newList = currentBookList.filter(book => book.id !== id);
+    setCurrentBookList(newList);
+  };
+
   React.useEffect(() => {
-    setFilteredBookList(bookList);
+    setFilteredBookList(currentBookList);
+  }, [currentBookList]);
+
+  React.useEffect(() => {
+    setCurrentBookList(bookList);
   }, [bookList]);
 
   return (
@@ -86,7 +96,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
                   <IconButton onClick={() => handleEditBook(book.id)} aria-label="editar" size="large">
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="borrar" size="large">
+                  <IconButton onClick={() => handleDeleteBook(book.id)} aria-label="borrar" size="large">
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
