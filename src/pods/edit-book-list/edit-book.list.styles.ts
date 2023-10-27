@@ -52,7 +52,7 @@ export const addBook = css`
   color: ${theme.palette.primary.main};
 `;
 
-export const srOnly = css`
+export const hiddeLabel = css`
   position: absolute;
   width: 1px;
   height: 1px;

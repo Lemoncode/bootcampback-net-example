@@ -49,10 +49,16 @@ export const EditBookComponent: React.FC<Props> = props => {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.title} variant="h1" component={'h1'}>
-        Editar Libro
-      </Typography>
-      <div className={classes.textFieldsContainer}>
+      <header>
+        <Typography className={classes.title} variant="h1" component={'h1'}>
+          Editar Libro
+        </Typography>
+      </header>
+
+      <section className={classes.textFieldsContainer}>
+        <label htmlFor="title" className={classes.hiddeLabel}>
+          Título
+        </label>
         <TextField
           id="title"
           onChange={handleFieldChange('title')}
@@ -60,6 +66,10 @@ export const EditBookComponent: React.FC<Props> = props => {
           variant="outlined"
           value={bookInfo.title}
         />
+
+        <label htmlFor="author" className={classes.hiddeLabel}>
+          Autores
+        </label>
         <TextField
           id="author"
           onChange={handleFieldChange('authors')}
@@ -77,6 +87,10 @@ export const EditBookComponent: React.FC<Props> = props => {
             readOnly: true,
           }}
         />
+
+        <label htmlFor="addAuthor" className={classes.hiddeLabel}>
+          Añadir autor
+        </label>
         <TextField
           id="addAuthor"
           label="Añadir autor"
@@ -89,7 +103,11 @@ export const EditBookComponent: React.FC<Props> = props => {
             }
           }}
         />
-      </div>
+      </section>
+
+      <label htmlFor="image" className={classes.hiddeLabel}>
+        Url Imagen
+      </label>
       <TextField
         id="image"
         onChange={handleFieldChange('image')}
@@ -97,6 +115,10 @@ export const EditBookComponent: React.FC<Props> = props => {
         variant="outlined"
         value={bookInfo.imageUrl}
       />
+
+      <label htmlFor="description" className={classes.hiddeLabel}>
+        Descripción
+      </label>
       <TextField
         id="description"
         onChange={handleFieldChange('description')}
@@ -106,6 +128,7 @@ export const EditBookComponent: React.FC<Props> = props => {
         multiline
         value={bookInfo.description}
       />
+
       <Button onClick={handleSaveBook} variant="contained">
         Guardar
       </Button>

@@ -68,7 +68,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
         </Typography>
       </header>
 
-      <label htmlFor="filterInput" className={classes.srOnly}>
+      <label htmlFor="filterInput" className={classes.hiddeLabel}>
         Filtrar por título de libro
       </label>
       <Input id="filterInput" onChange={handleFilter} placeholder="Filtrar por título..." />

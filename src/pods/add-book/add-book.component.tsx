@@ -43,11 +43,21 @@ export const AddBookComponent: React.FC<Props> = props => {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.title} variant="h1" component={'h1'}>
-        Editar Libro
-      </Typography>
-      <div className={classes.textFieldsContainer}>
+      <header>
+        <Typography className={classes.title} variant="h1" component={'h1'}>
+          Editar Libro
+        </Typography>
+      </header>
+
+      <section className={classes.textFieldsContainer}>
+        <label htmlFor="title" className={classes.hiddeLabel}>
+          Título
+        </label>
         <TextField id="title" onChange={handleFieldChange('title')} label="Título" variant="outlined" />
+
+        <label htmlFor="author" className={classes.hiddeLabel}>
+          Autores
+        </label>
         <TextField
           id="author"
           onChange={handleFieldChange('authors')}
@@ -65,6 +75,10 @@ export const AddBookComponent: React.FC<Props> = props => {
             readOnly: true,
           }}
         />
+
+        <label htmlFor="addAuthor" className={classes.hiddeLabel}>
+          Añadir autor
+        </label>
         <TextField
           id="addAuthor"
           label="Añadir autor"
@@ -77,8 +91,16 @@ export const AddBookComponent: React.FC<Props> = props => {
             }
           }}
         />
-      </div>
+      </section>
+
+      <label htmlFor="image" className={classes.hiddeLabel}>
+        Url Imagen
+      </label>
       <TextField id="image" onChange={handleFieldChange('image')} label="Url Imagen" variant="outlined" />
+
+      <label htmlFor="description" className={classes.hiddeLabel}>
+        Descripción
+      </label>
       <TextField
         id="description"
         onChange={handleFieldChange('description')}
@@ -87,6 +109,7 @@ export const AddBookComponent: React.FC<Props> = props => {
         minRows={4}
         multiline
       />
+
       <Button onClick={handleSaveBook} variant="contained">
         Guardar
       </Button>
