@@ -39,12 +39,12 @@ export const EditBookListComponent: React.FC<Props> = props => {
     setFilteredBookList(filteredList);
   };
 
-  const handleAddBook = () => {
-    navigate(switchRoutes.bookDetail('new'));
+  const handleNewBook = () => {
+    navigate(switchRoutes.newBook);
   };
 
   const handleEditBook = (id: string) => {
-    navigate(switchRoutes.bookDetail(id));
+    navigate(switchRoutes.editBook(id));
   };
 
   const handleDeleteBook = (id: string) => {
@@ -71,7 +71,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
         aria-label="Campo filtrar por título de libro"
       />
 
-      <IconButton className={classes.addBook} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
+      <IconButton className={classes.addBook} onClick={handleNewBook} aria-label="Añadir nuevo libro" size="large">
         <Typography variant="caption" component={'span'}>
           Añadir libro
         </Typography>
