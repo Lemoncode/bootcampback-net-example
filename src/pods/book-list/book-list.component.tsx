@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import { switchRoutes } from '@/core/router';
-import { Book } from './api';
+import { Book } from './book-list.vm';
 import * as classes from './book-list.styles';
 
 interface Props {

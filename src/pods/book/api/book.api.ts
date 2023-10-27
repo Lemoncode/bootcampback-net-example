@@ -1,5 +1,4 @@
-import { bookList } from '@/core/mocks';
-import { Book } from './book.api-model';
+import { bookList, Book } from '@/core/mocks';
 
 export const getBook = async (id: string): Promise<Book> => {
   const book = bookList.find(book => book.id === id);

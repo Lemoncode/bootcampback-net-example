@@ -1,5 +1,4 @@
-import { bookList } from '@/core/mocks';
-import { Book } from './edit-book-list.api-model';
+import { bookList, Book } from '@/core/mocks';
 
 export const getBookList = async (): Promise<Book[]> => {
   return [...bookList];

@@ -4,7 +4,7 @@ interface Review {
   text: string;
 }
 
-export interface Book {
+export interface BookVm {
   title: string;
   description: string;
   image: string;
@@ -12,7 +12,7 @@ export interface Book {
   reviews: Review[];
 }
 
-export const createEmptyBook = (): Book => ({
+export const createEmptyBook = (): BookVm => ({
   title: '',
   description: '',
   image: '',

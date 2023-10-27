@@ -6,10 +6,17 @@ import { EditBookListComponent } from './edit-book-list.component';
 export const EditBookList: React.FC = () => {
   const [bookList, setBookList] = React.useState([]);
 
+  const loadData = async () => {
+    try {
+      const books = await getBookList();
+      setBookList(mapBookListFromApiToVm(books));
+    } catch (error) {
+      throw error;
+    }
+  };
+
   React.useEffect(() => {
-    getBookList().then(bookList => {
-      setBookList(mapBookListFromApiToVm(bookList));
-    });
+    loadData();
   }, []);
   return <EditBookListComponent bookList={bookList} />;
 };

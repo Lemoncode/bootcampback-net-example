@@ -1,10 +1,10 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { Book } from './book.vm';
+import { BookVm } from './book.vm';
 import * as classes from './book.styles';
 
 interface Props {
-  book: Book;
+  book: BookVm;
 }
 
 export const BookComponent: React.FC<Props> = ({ book }) => {
