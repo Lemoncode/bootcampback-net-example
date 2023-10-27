@@ -39,8 +39,8 @@ export const EditBookListComponent: React.FC<Props> = props => {
     setFilteredBookList(filteredList);
   };
 
-  const handleNewBook = () => {
-    navigate(switchRoutes.newBook);
+  const handleAddBook = () => {
+    navigate(switchRoutes.addBook);
   };
 
   const handleEditBook = (id: string) => {
@@ -62,49 +62,61 @@ export const EditBookListComponent: React.FC<Props> = props => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h1" component={'h1'}>
-        Edición de libros
-      </Typography>
-      <Input
-        onChange={handleFilter}
-        placeholder="Filtrar por título..."
-        aria-label="Campo filtrar por título de libro"
-      />
+      <header>
+        <Typography variant="h1" component={'h1'}>
+          Edición de libros
+        </Typography>
+      </header>
 
-      <IconButton className={classes.addBook} onClick={handleNewBook} aria-label="Añadir nuevo libro" size="large">
+      <label htmlFor="filterInput" className={classes.srOnly}>
+        Filtrar por título de libro
+      </label>
+      <Input id="filterInput" onChange={handleFilter} placeholder="Filtrar por título..." />
+
+      <IconButton className={classes.addBook} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
         <Typography variant="caption" component={'span'}>
           Añadir libro
         </Typography>
         <AddCircleIcon />
       </IconButton>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Título</TableCell>
-              <TableCell>Autores</TableCell>
-              <TableCell align="right">Comandos</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredBookList?.map(book => (
-              <TableRow key={book.id} tabIndex={0}>
-                <TableCell tabIndex={1}>{book.title}</TableCell>
-                <TableCell tabIndex={1}>{book.authors.join(', ')}</TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleEditBook(book.id)} aria-label="editar" size="large">
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleDeleteBook(book.id)} aria-label="borrar" size="large">
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
+      <main>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Título</TableCell>
+                <TableCell>Autores</TableCell>
+                <TableCell align="right">Comandos</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {filteredBookList?.map(book => (
+                <TableRow key={book.id}>
+                  <TableCell>{book.title}</TableCell>
+                  <TableCell>{book.authors.join(', ')}</TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      onClick={() => handleEditBook(book.id)}
+                      aria-label={`editar ${book.title}`}
+                      size="large"
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleDeleteBook(book.id)}
+                      aria-label={`borrar ${book.title}`}
+                      size="large"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </main>
     </div>
   );
 };

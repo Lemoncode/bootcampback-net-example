@@ -22,7 +22,7 @@ export const RouterComponent: React.FC = () => {
         <Route path={switchRoutes.dashboard} element={<DashboardScene />} />
         <Route path={switchRoutes.editBookList} element={<EditBookListScene />} />
         <Route path={switchRoutes.editBook(':id')} element={<EditBookScene />} />
-        <Route path={switchRoutes.newBook} element={<NewBookScene />} />
+        <Route path={switchRoutes.addBook} element={<NewBookScene />} />
         <Route path="*" element={<BookListScene />}></Route>
       </Routes>
     </HashRouter>

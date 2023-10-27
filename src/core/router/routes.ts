@@ -7,7 +7,7 @@ interface SwitchRoutes {
   dashboard: string;
   editBookList: string;
   editBook: (id: string) => string;
-  newBook: string;
+  addBook: string;
 }
 
 export const switchRoutes: SwitchRoutes = {
@@ -18,5 +18,5 @@ export const switchRoutes: SwitchRoutes = {
   dashboard: '/dashboard',
   editBookList: '/bock-list-edition',
   editBook: (id: string) => `/book-edition/${id}`,
-  newBook: '/new-add',
+  addBook: '/add-book',
 };

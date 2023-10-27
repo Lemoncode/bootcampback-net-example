@@ -17,6 +17,11 @@ export const root = css`
     font-weight: bold;
   }
 
+  .${typographyClasses.caption} {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
   .${inputClasses.input} {
     background-color: ${theme.palette.background.paper};
     padding: ${theme.spacing(1)};
@@ -45,4 +50,16 @@ export const addBook = css`
   justify-content: flex-end;
   gap: 16px;
   color: ${theme.palette.primary.main};
+`;
+
+export const srOnly = css`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `;

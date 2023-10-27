@@ -1,11 +1,11 @@
 import React from 'react';
 import { AppLayout } from '@/layouts';
-import { NewBook } from '@/pods/new-book';
+import { AddBook } from '@/pods/add-book';
 
 export const NewBookScene: React.FC = () => {
   return (
     <AppLayout>
-      <NewBook />
+      <AddBook />
     </AppLayout>
   );
 };
