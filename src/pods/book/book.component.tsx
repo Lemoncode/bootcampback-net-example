@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { useAuthContext } from '@/core/auth';
 import { BookVm } from './book.vm';
 import * as classes from './book.styles';
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export const BookComponent: React.FC<Props> = ({ book }) => {
+  const { isUserLogged } = useAuthContext();
+
   return (
     <div className={classes.root}>
       <img src={book?.image} alt={`Portada del libro ${book?.title}`} aria-label={`Portada del libro ${book?.title}`} />
@@ -45,6 +48,11 @@ export const BookComponent: React.FC<Props> = ({ book }) => {
               </Typography>
             </div>
           ))}
+          {isUserLogged && (
+            <Button variant="contained" color="primary" aria-label="Crear reseña">
+              Crear Reseña
+            </Button>
+          )}
         </div>
       </div>
     </div>

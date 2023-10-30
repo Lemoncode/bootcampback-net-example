@@ -1,14 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { useAuthContext } from '@/core/auth';
 import { switchRoutes } from '@/core/router';
 import * as classes from './login.styles';
 
 export const LoginComponent: React.FC = () => {
   const navigate = useNavigate();
+  const { setIsUserLogged } = useAuthContext();
 
   const handleSubmit = e => {
     e.preventDefault();
+    setIsUserLogged(true);
     navigate(switchRoutes.dashboard);
   };
 
