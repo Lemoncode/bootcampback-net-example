@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.10.0",
     "@types/react": "^18.2.29",
     "@types/react-dom": "^18.2.13",
     "@vitejs/plugin-react": "^4.1.0",
@@ -30,7 +31,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
-    "axios": "^1.5.1",
+    "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0"
