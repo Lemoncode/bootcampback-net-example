@@ -7,11 +7,11 @@ import { Typography } from '@mui/material';
 interface Props {
   authorList: Author[];
   page: number;
-  onPageChange: (page: number) => void;
+  onChangePage: (page: number) => void;
 }
 
 export const EditAuthorList: React.FC<Props> = props => {
-  const { authorList, page, onPageChange } = props;
+  const { authorList, page, onChangePage} = props;
 
   const handleEditAuthor = (id: string) => {
     console.log('Edit author', id);
@@ -36,7 +36,7 @@ export const EditAuthorList: React.FC<Props> = props => {
         onDelete={handleDeleteAuthor}
         pageSize={10}
         page={page}
-        onPageChange={onPageChange}
+        onChangePage={onChangePage}
       />
     </div>
   );

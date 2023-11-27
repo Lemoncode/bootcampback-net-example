@@ -1,11 +1,23 @@
-import { useState } from 'react';
+import React from 'react';
 
-export const usePagination = (initialPage: number = 1) => {
-  const [page, setPage] = useState(initialPage);
+interface PaginationProps {
+  initialPage: number;
+  pageSize: number;
+  fetchRowList: (page: number, pageSize: number) => void;
+}
 
-  const changePage = (newPage: number) => {
+export const usePagination = (paginationProps: PaginationProps) => {
+  const { initialPage, pageSize, fetchRowList } = paginationProps;
+  const [page, setPage] = React.useState(initialPage);
+
+  const navigateToPage = (newPage: number) => {
     setPage(newPage);
+    fetchRowList(page, pageSize);
   };
 
-  return { page, changePage };
+  React.useEffect(() => {
+    navigateToPage(page);
+  }, [page, pageSize]);
+
+  return { page, navigateToPage };
 };

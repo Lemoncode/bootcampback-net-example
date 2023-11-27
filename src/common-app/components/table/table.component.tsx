@@ -22,7 +22,7 @@ interface Props {
   pageSize?: number;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
-  onPageChange: (page: number) => void;
+  onChangePage: (page: number) => void;
   className?: string;
 }
 
@@ -46,7 +46,7 @@ const renderActionButtons = (row: Row, onEdit: (id: string) => void, onDelete: (
 };
 
 export const Table: React.FC<Props> = props => {
-  const { rows, page, pageSize, rowsTotalCount, columns, onEdit, onDelete, onPageChange, className } = props;
+  const { rows, page, pageSize, rowsTotalCount, columns, onEdit, onDelete, onChangePage, className } = props;
 
   return (
     <TableContainer component={Paper} className={className}>
@@ -74,7 +74,7 @@ export const Table: React.FC<Props> = props => {
         rowsPerPage={pageSize}
         page={page - 1}
         rowsPerPageOptions={[pageSize]}
-        onPageChange={(event, newPage) => onPageChange(newPage)}
+        onPageChange={(event, newPage) => onChangePage(newPage)}
       />
     </TableContainer>
   );
