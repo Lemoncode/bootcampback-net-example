@@ -12,23 +12,41 @@ import {
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 
-interface Props<T = {}> {
+type Row = { [key: string]: any };
+
+interface Props {
   columns: string[];
-  rows: T[];
-  totalItems?: number;
+  rows: Row[];
+  rowsTotalCount?: number;
+  page?: number;
+  pageSize?: number;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
+  onPageChange: (page: number) => void;
   className?: string;
 }
 
-const renderTableCells = (item) => {
-  return Object.keys(item)
+const renderTableCells = (row: Row) => {
+  return Object.keys(row)
     .filter(key => key !== 'id')
-    .map(key => <TableCell key={key}>{item[key]}</TableCell>);
+    .map(key => <TableCell key={key}>{row[key]}</TableCell>);
+};
+
+const renderActionButtons = (row: Row, onEdit: (id: string) => void, onDelete: (id: string) => void) => {
+  return (
+    <TableCell align="right">
+      <IconButton onClick={() => onEdit(row.id)} aria-label={`editar ${row.title}`} size="large">
+        <EditIcon />
+      </IconButton>
+      <IconButton onClick={() => onDelete(row.id)} aria-label={`borrar ${row.title}`} size="large">
+        <DeleteIcon />
+      </IconButton>
+    </TableCell>
+  );
 };
 
 export const Table: React.FC<Props> = props => {
-  const { rows, columns, onEdit, onDelete, className } = props;
+  const { rows, page, pageSize, rowsTotalCount, columns, onEdit, onDelete, onPageChange, className } = props;
 
   return (
     <TableContainer component={Paper} className={className}>
@@ -45,25 +63,18 @@ export const Table: React.FC<Props> = props => {
           {rows?.map(row => (
             <TableRow key={row.id}>
               {renderTableCells(row)}
-              <TableCell align="right">
-                <IconButton onClick={() => onEdit(row.id)} aria-label={`editar ${row.id}`} size="large">
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => onDelete(row.id)} aria-label={`borrar ${row.id}`} size="large">
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
+              {renderActionButtons(row, onEdit, onDelete)}
             </TableRow>
           ))}
         </TableBody>
       </TableMaterial>
       <TablePagination
         component="div"
-        count={12}
-        rowsPerPage={10}
-        page={0}
-        rowsPerPageOptions={[5]}
-        onPageChange={() => {}}
+        count={rowsTotalCount}
+        rowsPerPage={pageSize}
+        page={page - 1}
+        rowsPerPageOptions={[pageSize]}
+        onPageChange={(event, newPage) => onPageChange(newPage)}
       />
     </TableContainer>
   );

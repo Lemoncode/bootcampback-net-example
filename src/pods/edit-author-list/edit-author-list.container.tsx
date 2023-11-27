@@ -5,14 +5,16 @@ import * as api from './api';
 
 export const EditAuthorListContainer: React.FC = () => {
   const [authorList, setAuthorList] = React.useState<api.Author[]>([]);
-
+  const [page, setPage] = React.useState(1);
+  const pageSize = 10;
+  
   React.useEffect(() => {
     try {
-      api.getAuthorList(1, 5).then(mapAuthorListFromApiToVm).then(setAuthorList);
+      api.getAuthorList(page, pageSize).then(mapAuthorListFromApiToVm).then(setAuthorList);
     } catch (error) {
       throw error;
     }
-  }, []);
+  }, [page, pageSize]);
 
-  return <EditAuthorList authorList={authorList} />;
+  return <EditAuthorList authorList={authorList} setAuthorList={setAuthorList} page={page} setPage={setPage} />;
 };
