@@ -10,7 +10,7 @@ import {
   IconButton,
   TablePagination,
 } from '@mui/material';
-import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { ActionButtons } from './components';
 
 type Row = { [key: string]: any };
 
@@ -32,19 +32,6 @@ const renderTableCells = (row: Row) => {
     .map(key => <TableCell key={key}>{row[key]}</TableCell>);
 };
 
-const renderActionButtons = (row: Row, onEdit: (id: string) => void, onDelete: (id: string) => void) => {
-  return (
-    <TableCell align="right">
-      <IconButton onClick={() => onEdit(row.id)} aria-label={`editar ${row.title}`} size="large">
-        <EditIcon />
-      </IconButton>
-      <IconButton onClick={() => onDelete(row.id)} aria-label={`borrar ${row.title}`} size="large">
-        <DeleteIcon />
-      </IconButton>
-    </TableCell>
-  );
-};
-
 export const Table: React.FC<Props> = props => {
   const { rows, page, pageSize, rowsTotalCount, columns, onEdit, onDelete, onChangePage, className } = props;
 
@@ -63,7 +50,7 @@ export const Table: React.FC<Props> = props => {
           {rows?.map(row => (
             <TableRow key={row.id}>
               {renderTableCells(row)}
-              {renderActionButtons(row, onEdit, onDelete)}
+              <ActionButtons row={row} onEdit={onEdit} onDelete={onDelete} />
             </TableRow>
           ))}
         </TableBody>
