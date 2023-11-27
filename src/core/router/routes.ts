@@ -1,21 +1,23 @@
 interface SwitchRoutes {
   root: string;
-  bookList: string;
-  bookDetail: (id: string) => string;
   login: string;
+  bookList: string;
   dashboard: string;
   editBookList: string;
-  editBook: (id: string) => string;
+  editAuthorList: string;
   addBook: string;
+  editBook: (id: string) => string;
+  bookDetail: (id: string) => string;
 }
 
 export const switchRoutes: SwitchRoutes = {
   root: '/',
-  bookList: '/book-list',
-  bookDetail: (id: string) => `/book-detail/${id}`,
   login: '/login',
+  bookList: '/book-list',
   dashboard: '/dashboard',
   editBookList: '/bock-list-edition',
-  editBook: (id: string) => `/book-edition/${id}`,
+  editAuthorList: '/author-list-edition',
   addBook: '/add-book',
+  editBook: (id: string) => `/book-edition/${id}`,
+  bookDetail: (id: string) => `/book-detail/${id}`,
 };

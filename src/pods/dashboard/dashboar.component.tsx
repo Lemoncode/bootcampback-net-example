@@ -19,7 +19,12 @@ export const DashboardComponent: React.FC = () => {
             Libros
           </Typography>
         </Link>
-        <Link className={classes.card} to={'#'} aria-label="Edición, lista de autores" tabIndex={0}>
+        <Link
+          className={classes.card}
+          to={switchRoutes.editAuthorList}
+          aria-label="Edición, lista de autores"
+          tabIndex={0}
+        >
           <PersonIcon className={classes.cardIcon} />
           <Typography variant="button" component="div">
             Autores
