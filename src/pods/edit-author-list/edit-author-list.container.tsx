@@ -8,7 +8,7 @@ export const EditAuthorListContainer: React.FC = () => {
 
   React.useEffect(() => {
     try {
-      api.getAuthorList().then(mapAuthorListFromApiToVm).then(setAuthorList);
+      api.getAuthorList(1, 5).then(mapAuthorListFromApiToVm).then(setAuthorList);
     } catch (error) {
       throw error;
     }
