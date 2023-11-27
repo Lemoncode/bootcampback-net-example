@@ -1,14 +1,11 @@
-import React from 'react';
+import { useState } from 'react';
 
-type FetchItemsFunction = (page: number, pageSize: number) => void;
+export const usePagination = (initialPage: number = 1) => {
+  const [page, setPage] = useState(initialPage);
 
-export const usePagination = (pageSize: number, fetchItems: FetchItemsFunction) => {
-  const [page, setPage] = React.useState(1);
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage + 1);
-    fetchItems(newPage + 1, pageSize);
+  const changePage = (newPage: number) => {
+    setPage(newPage);
   };
 
-  return { page, onPageChange: handlePageChange };
+  return { page, changePage };
 };
