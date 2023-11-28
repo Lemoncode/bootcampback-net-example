@@ -73,7 +73,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
       </label>
       <Input id="filterInput" onChange={handleFilter} placeholder="Filtrar por título..." />
 
-      <IconButton className={classes.addBook} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
+      <IconButton className={classes.add} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
         <Typography variant="caption" component={'span'}>
           Añadir libro
         </Typography>
