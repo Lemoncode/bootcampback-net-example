@@ -8,6 +8,7 @@ import {
   EditBookListScene,
   EditBookScene,
   NewBookScene,
+  EditAuthorListScene,
 } from '@/scenes';
 import { switchRoutes } from './routes';
 
@@ -16,13 +17,14 @@ export const RouterComponent: React.FC = () => {
     <HashRouter>
       <Routes>
         <Route path={switchRoutes.root} element={<BookListScene />} />
-        <Route path={switchRoutes.bookList} element={<BookListScene />} />
-        <Route path={switchRoutes.bookDetail(':id')} element={<BookScene />} />
         <Route path={switchRoutes.login} element={<LoginScene />} />
         <Route path={switchRoutes.dashboard} element={<DashboardScene />} />
-        <Route path={switchRoutes.editBookList} element={<EditBookListScene />} />
-        <Route path={switchRoutes.editBook(':id')} element={<EditBookScene />} />
+        <Route path={switchRoutes.bookList} element={<BookListScene />} />
         <Route path={switchRoutes.addBook} element={<NewBookScene />} />
+        <Route path={switchRoutes.editBookList} element={<EditBookListScene />} />
+        <Route path={switchRoutes.editAuthorList} element={<EditAuthorListScene />} />
+        <Route path={switchRoutes.bookDetail(':id')} element={<BookScene />} />
+        <Route path={switchRoutes.editBook(':id')} element={<EditBookScene />} />
         <Route path="*" element={<BookListScene />}></Route>
       </Routes>
     </HashRouter>
