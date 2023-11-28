@@ -1,6 +1,6 @@
 import React from 'react';
 import { Author } from './edit-author-list.vm';
-import { Pagination } from '@mui/material';
+import { Pagination, PaginationItem } from '@mui/material';
 import { PAGE_SIZE } from './edit-author-list.constants';
 
 interface Props {
@@ -19,7 +19,17 @@ export const EditAuthorList: React.FC<Props> = props => {
       {authorList.map(author => (
         <h2 key={author.id}>{author.firstName}</h2>
       ))}
-      <Pagination count={totalPages} page={currentPage} onChange={onPageChange} />
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={onPageChange}
+        renderItem={item => (
+          <PaginationItem
+            {...item}
+            aria-label={item.type === 'page' ? `Ir a la página ${item.page}` : `Ir a ${item.type}`}
+          />
+        )}
+      />
     </>
   );
 };
