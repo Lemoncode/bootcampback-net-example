@@ -4,7 +4,6 @@ import { mapAuthorListFromApiToVm } from './edit-author-list.mappers';
 import { EditAuthorList } from './edit-author-list.component';
 import { Author } from './edit-author-list.vm';
 import * as api from './api';
-import { usePagination } from '@/common/hooks';
 
 export const EditAuthorListContainer: React.FC = () => {
   const [totalRows, setTotalRows] = React.useState<number>(0);
@@ -24,14 +23,22 @@ export const EditAuthorListContainer: React.FC = () => {
     [setAuthorList, setTotalRows]
   );
 
-  const { currentPage, handlePageChange } = usePagination(INITIAL_PAGE, loadData);
+  const handleEdit = (id: string) => {
+    console.log(`Edit author ${id}`);
+  };
+
+  const handleDelete = (id: string) => {
+    console.log(`Delete author ${id}`);
+  };
 
   return (
     <EditAuthorList
       totalRows={totalRows}
       authorList={authorList}
-      currentPage={currentPage}
-      onPageChange={handlePageChange}
+      initialPage={INITIAL_PAGE}
+      loadData={loadData}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
     />
   );
 };
