@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { RequestEditAuthorList } from './edit-author-list.model';
+import { EditAuthorListParams, EditAuthorListResponse } from './edit-author-list.model';
 
 const baseUrl = '/api/authors';
 
-export const getEditAuthorList = async (page: number, pageSize: number): Promise<RequestEditAuthorList> => {
-  const { data } = await axios.get<RequestEditAuthorList>(`${baseUrl}?page=${page}&pageSize=${pageSize}`);
+export const getEditAuthorList = async ({ page, pageSize }: EditAuthorListParams): Promise<EditAuthorListResponse> => {
+  const { data } = await axios.get<EditAuthorListResponse>(`${baseUrl}?page=${page}&pageSize=${pageSize}`);
   return data;
 };

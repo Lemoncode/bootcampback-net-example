@@ -9,14 +9,19 @@ interface PaginationInfo {
   resultsTo: number;
 }
 
-interface AuthorList {
+export interface Author {
   id: number;
   firstName: string;
   lastName: string;
   bookCount: number;
 }
 
-export interface RequestEditAuthorList {
-  results: AuthorList[];
+export interface EditAuthorListResponse {
+  results: Author[];
   paginationInfo: PaginationInfo;
+}
+
+export interface EditAuthorListParams {
+  page: number;
+  pageSize: number;
 }
