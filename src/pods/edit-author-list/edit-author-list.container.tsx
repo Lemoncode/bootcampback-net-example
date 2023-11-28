@@ -4,22 +4,34 @@ import { mapAuthorListFromApiToVm } from './edit-author-list.mappers';
 import { EditAuthorList } from './edit-author-list.component';
 import { Author } from './edit-author-list.vm';
 import * as api from './api';
+import { usePagination } from '@/common/hooks';
 
 export const EditAuthorListContainer: React.FC = () => {
   const [totalRows, setTotalRows] = React.useState<number>(0);
   const [authorList, setAuthorList] = React.useState<Author[]>([]);
+  const loadData = React.useCallback(
+    (newPage: number) => {
+      api
+        .getEditAuthorList({
+          page: newPage,
+          pageSize: PAGE_SIZE,
+        })
+        .then(resp => {
+          setAuthorList(mapAuthorListFromApiToVm(resp.results));
+          setTotalRows(resp.paginationInfo.totalRows);
+        });
+    },
+    [setAuthorList, setTotalRows]
+  );
 
-  React.useEffect(() => {
-    api
-      .getEditAuthorList({
-        page: INITIAL_PAGE,
-        pageSize: PAGE_SIZE,
-      })
-      .then(resp => {
-        setAuthorList(mapAuthorListFromApiToVm(resp.results));
-        setTotalRows(resp.paginationInfo.totalRows);
-      });
-  }, []);
+  const { currentPage, handlePageChange } = usePagination(INITIAL_PAGE, loadData);
 
-  return <EditAuthorList totalRows={totalRows} authorList={authorList} />;
+  return (
+    <EditAuthorList
+      totalRows={totalRows}
+      authorList={authorList}
+      currentPage={currentPage}
+      onPageChange={handlePageChange}
+    />
+  );
 };
