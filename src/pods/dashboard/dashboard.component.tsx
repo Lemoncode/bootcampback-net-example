@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 import BookIcon from '@mui/icons-material/MenuBook';
 import PersonIcon from '@mui/icons-material/Person';
 import { switchRoutes } from '@/core/router';
-import * as classes from './dashboar.styles';
+import * as classes from './dashboard.styles';
 
 export const DashboardComponent: React.FC = () => {
   return (
