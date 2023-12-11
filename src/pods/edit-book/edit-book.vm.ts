@@ -1,9 +1,10 @@
 export interface BookVm {
   id: string;
   title: string;
-  authors: string[];
+  authors: number[];
   description: string;
   imageUrl: string;
+  imageAltText: string;
 }
 
 export const createEmptyBook = (): BookVm => ({
@@ -12,4 +13,5 @@ export const createEmptyBook = (): BookVm => ({
   authors: [],
   description: '',
   imageUrl: '',
+  imageAltText: '',
 });

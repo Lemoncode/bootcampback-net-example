@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { getBookInfo, updateBook } from './api';
+import { getBookInfo } from './api';
 import { mapBookInfoFromApiToVm } from './edit-book.mappers';
 import { createEmptyBook } from './edit-book.vm';
 import { EditBookComponent } from './edit-book.component';
@@ -22,5 +22,5 @@ export const EditBook: React.FC = () => {
     loadBookInfo();
   }, []);
 
-  return <EditBookComponent book={bookInfo} updateBook={updateBook} />;
+  return <EditBookComponent book={bookInfo} />;
 };

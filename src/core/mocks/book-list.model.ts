@@ -6,11 +6,11 @@ interface Review {
 }
 
 export interface Book {
-  id: string;
+  id?: string;
   title: string;
   imageUrl: string;
   imageAltText: string;
   description: string;
-  authors: string[];
-  reviews: Review[];
+  authors: number[];
+  reviews?: Review[];
 }

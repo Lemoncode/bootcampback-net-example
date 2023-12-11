@@ -1,42 +1,31 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, TextField, Button, Chip, IconButton } from '@mui/material';
+import { Typography, TextField, Button, Chip, IconButton, Autocomplete } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Lookup } from '@/common/models';
 import { switchRoutes } from '@/core/router';
 import { BookVm, createEmptyBook } from './add-book.vm';
-import * as classes from './add-book.styles';
 import { saveImage } from './api';
+import * as classes from './add-book.styles';
 
 interface Props {
   addBook: (book: BookVm) => void;
+  authorList: Lookup[];
 }
 
 export const AddBookComponent: React.FC<Props> = props => {
-  const { addBook } = props;
-  const [bookInfo, setBookInfo] = React.useState(createEmptyBook());
-  const [autores, setAutores] = React.useState(bookInfo.authors);
-  const [fileName, setFileName] = React.useState<string>('');
-  const [newAuthor, setNewAuthor] = React.useState('');
-  const fileInput = React.useRef(null);
-
+  const { addBook, authorList } = props;
   const navigate = useNavigate();
+  const [bookInfo, setBookInfo] = React.useState(createEmptyBook());
+  const [fileName, setFileName] = React.useState<string>('');
+  const fileInput = React.useRef(null);
 
   const handleGoBack = () => {
     navigate(switchRoutes.editBookList);
   };
 
-  const handleAddAuthor = () => {
-    setAutores([...autores, newAuthor]);
-    setNewAuthor('');
-  };
-
-  const handleDeleteAuthor = index => {
-    const nuevosAutores = autores.filter((_, i) => i !== index);
-    setAutores(nuevosAutores);
-  };
-
-  const handleFieldChange = (fieldId: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleFieldChange = (fieldId: string) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
+    if (Boolean(!value)) return setBookInfo({ ...bookInfo, [fieldId]: e.target.value });
     setBookInfo({ ...bookInfo, [fieldId]: value });
   };
 
@@ -49,7 +38,6 @@ export const AddBookComponent: React.FC<Props> = props => {
       const file = event.target.files[0];
       setFileName(file.name);
       saveImage(file).then(imageUrl => {
-        console.log(imageUrl.id);
         setBookInfo({ ...bookInfo, imageUrl: imageUrl.id });
       });
     } catch (error) {
@@ -60,7 +48,7 @@ export const AddBookComponent: React.FC<Props> = props => {
     <div className={classes.root}>
       <header>
         <Typography className={classes.title} variant="h1" component={'h1'}>
-          Editar Libro
+          Añadir Libro
         </Typography>
       </header>
 
@@ -69,42 +57,14 @@ export const AddBookComponent: React.FC<Props> = props => {
           Título
         </label>
         <TextField id="title" onChange={handleFieldChange('title')} label="Título" variant="outlined" />
-
-        <label htmlFor="author" className={classes.hiddeLabel}>
-          Autores
-        </label>
-        <TextField
-          id="author"
+        <Autocomplete
+          multiple
+          id="authors"
+          options={authorList}
+          getOptionLabel={(option: Lookup) => option.name}
+          filterSelectedOptions
           onChange={handleFieldChange('authors')}
-          label="Autores"
-          variant="outlined"
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <div className={classes.chipsContainer}>
-                {autores.map((autor, index) => (
-                  <Chip key={index} label={autor} onDelete={() => handleDeleteAuthor(index)} />
-                ))}
-              </div>
-            ),
-            readOnly: true,
-          }}
-        />
-
-        <label htmlFor="addAuthor" className={classes.hiddeLabel}>
-          Añadir autor
-        </label>
-        <TextField
-          id="addAuthor"
-          label="Añadir autor"
-          variant="outlined"
-          fullWidth
-          onChange={e => setNewAuthor(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              handleAddAuthor();
-            }
-          }}
+          renderInput={params => <TextField {...params} label="Autores" />}
         />
       </section>
 
@@ -112,7 +72,21 @@ export const AddBookComponent: React.FC<Props> = props => {
         Añadir imagen
       </Button>
       <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
-      {fileName && <Typography variant="caption">Archivo seleccionado: {fileName}</Typography>}
+      {fileName && (
+        <>
+          <Typography variant="caption">Archivo seleccionado: {fileName}</Typography>{' '}
+          <label htmlFor="imageAltText" className={classes.hiddeLabel}>
+            Título
+          </label>
+          <TextField
+            id="imageAltText"
+            onChange={handleFieldChange('imageAltText')}
+            label="Descripción de la imagen"
+            variant="outlined"
+          />
+        </>
+      )}
+
       <label htmlFor="description" className={classes.hiddeLabel}>
         Descripción
       </label>

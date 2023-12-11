@@ -1,15 +1,18 @@
 import axios from 'axios';
-import { bookList, Book } from '@/core/mocks';
-import { BookVm } from '../add-book.vm';
+import { Author, Book, EditAuthorListResponse } from '@/core/mocks';
 
-export const addBook = async (book?: BookVm): Promise<boolean> => true;
+export const addBook = async (book: Book): Promise<boolean> => true;
+
+export const getActhorList = async (): Promise<Author[]> => {
+  const { data } = await axios.get<EditAuthorListResponse>('/api/authors');
+  return data.results;
+};
 
 export const saveImage = async (file: File): Promise<{ id: string }> => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const baseUrl = '/api/books/newImage';
-  const { data } = await axios.post(baseUrl, formData, {
+  const { data } = await axios.post('/api/books/newImage', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

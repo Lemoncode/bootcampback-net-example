@@ -8,11 +8,11 @@ import * as classes from './edit-book.styles';
 
 interface Props {
   book: BookVm;
-  updateBook: (book: BookVm) => void;
+  // updateBook: (book: BookVm) => void;
 }
 
 export const EditBookComponent: React.FC<Props> = props => {
-  const { book, updateBook } = props;
+  const { book } = props;
   const [bookInfo, setBookInfo] = React.useState(book);
   const [autores, setAutores] = React.useState(bookInfo.authors);
   const [newAuthor, setNewAuthor] = React.useState('');
@@ -23,10 +23,10 @@ export const EditBookComponent: React.FC<Props> = props => {
     navigate(switchRoutes.editBookList);
   };
 
-  const handleAddAuthor = () => {
-    setAutores([...autores, newAuthor]);
-    setNewAuthor('');
-  };
+  // const handleAddAuthor = () => {
+  //   setAutores([...autores, newAuthor]);
+  //   setNewAuthor('');
+  // };
 
   const handleDeleteAuthor = index => {
     const nuevosAutores = autores.filter((_, i) => i !== index);
@@ -39,7 +39,7 @@ export const EditBookComponent: React.FC<Props> = props => {
   };
 
   const handleSaveBook = () => {
-    updateBook(bookInfo);
+    // updateBook(bookInfo);
   };
 
   React.useEffect(() => {
@@ -99,7 +99,7 @@ export const EditBookComponent: React.FC<Props> = props => {
           onChange={e => setNewAuthor(e.target.value)}
           onKeyDown={e => {
             if (e.key === 'Enter') {
-              handleAddAuthor();
+              // handleAddAuthor();
             }
           }}
         />
