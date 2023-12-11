@@ -6,5 +6,5 @@ export const mapBookListFromApiToVm = (bookList: Book[]): vm.Book[] => bookList.
 const mapBookFromApiToVm = (book: Book): vm.Book => ({
   id: book.id,
   title: book.title,
-  image: book.image,
+  imageUrl: `/api/books/${book.id}/image`,
 });

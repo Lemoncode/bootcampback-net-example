@@ -8,7 +8,7 @@ interface Review {
 export interface Book {
   id: string;
   title: string;
-  image: string;
+  imageUrl: string;
   description: string;
   authors: string[];
   reviews: Review[];

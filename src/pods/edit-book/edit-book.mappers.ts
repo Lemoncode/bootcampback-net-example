@@ -6,7 +6,7 @@ export const mapBookInfoFromApiToVm = (book: apiModel): BookVm => ({
   title: book.title,
   authors: book.authors,
   description: book.description,
-  imageUrl: book.image,
+  imageUrl: book.imageUrl,
 });
 
 export const createEmptyBook = (): BookVm => ({
