@@ -8,6 +8,7 @@ export const bookList: Book[] = [
       'Una novela icónica de realismo mágico que narra la historia de la familia Buendía en el pueblo de Macondo.',
     authors: ['Gabriel García Márquez'],
     imageUrl: 'cien-anyos-de-soledad.jpg',
+    imageAltText: 'Cien años de soledad',
     reviews: [
       {
         id: '1',
@@ -30,6 +31,7 @@ export const bookList: Book[] = [
       'Una distopía que explora temas de vigilancia estatal y control del pensamiento en un futuro totalitario.',
     authors: ['George Orwell'],
     imageUrl: '1984.jpg',
+    imageAltText: '1984',
     reviews: [
       {
         id: '3',
@@ -45,6 +47,7 @@ export const bookList: Book[] = [
     description: 'La historia de Bilbo Bolsón y su épica aventura para recuperar un tesoro custodiado por un dragón.',
     authors: ['J.R.R. Tolkien'],
     imageUrl: 'el-hobbit.jpg',
+    imageAltText: 'El Hobbit',
     reviews: [
       {
         id: '4',
@@ -61,6 +64,7 @@ export const bookList: Book[] = [
       'La novela cuenta la historia de un abogado que defiende a un hombre negro acusado de violar a una mujer blanca en el sur de los Estados Unidos.',
     authors: ['Harper Lee'],
     imageUrl: 'matar-a-un-ruiseñor.jpg',
+    imageAltText: 'Matar a un ruiseñor',
     reviews: [
       {
         id: '5',
@@ -77,6 +81,7 @@ export const bookList: Book[] = [
       'La historia se desarrolla en un futuro distópico y sigue a Katniss Everdeen en su lucha por la supervivencia en un concurso mortal.',
     authors: ['Suzanne Collins'],
     imageUrl: 'los-juegos-del-hambre.jpg',
+    imageAltText: 'Los juegos del hambre',
     reviews: [
       {
         id: '6',
@@ -93,6 +98,7 @@ export const bookList: Book[] = [
       'Necesitamos estar cerca de las personas que queremos casi tanto como el aire que respiramos. A Stella Grant le gusta tener el control, a pesar de no poder dominar sus propios pulmones, que la han tenido en el hospital la mayor parte de su vida. Por encima de todo, Stella necesita controlar su espacio para mantenerse alejada de cualquier persona o cosa que pueda transmitirle una infección y poner en peligro su trasplante de pulmón. Dos metros de distancia. Sin excepciones.',
     authors: ['Rachael Lippincott', 'Mikki Daughtry', 'Tobias Iaconis'],
     imageUrl: 'a-dos-metros-de-ti.jpg',
+    imageAltText: 'A dos metros de ti',
     reviews: [
       {
         id: '7',

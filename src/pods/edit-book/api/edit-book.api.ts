@@ -1,9 +1,11 @@
+import axios from 'axios';
 import { bookList, Book } from '@/core/mocks';
 import { BookVm } from '../edit-book.vm';
 
 export const getBookInfo = async (id: string): Promise<Book> => {
-  const book = bookList.find(book => book.id === id);
-  return book ? book : Promise.reject('Book not found');
+  const baseUrl = '/api/books';
+  const { data } = await axios.get<Book>(`${baseUrl}/${id}`);
+  return data;
 };
 
 export const updateBook = async (book: BookVm): Promise<boolean> => {
