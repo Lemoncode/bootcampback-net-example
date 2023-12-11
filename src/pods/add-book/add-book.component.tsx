@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { switchRoutes } from '@/core/router';
 import { BookVm, createEmptyBook } from './add-book.vm';
 import * as classes from './add-book.styles';
+import { saveImage } from './api';
 
 interface Props {
   addBook: (book: BookVm) => void;
@@ -14,7 +15,9 @@ export const AddBookComponent: React.FC<Props> = props => {
   const { addBook } = props;
   const [bookInfo, setBookInfo] = React.useState(createEmptyBook());
   const [autores, setAutores] = React.useState(bookInfo.authors);
+  const [fileName, setFileName] = React.useState<string>('');
   const [newAuthor, setNewAuthor] = React.useState('');
+  const fileInput = React.useRef(null);
 
   const navigate = useNavigate();
 
@@ -41,6 +44,18 @@ export const AddBookComponent: React.FC<Props> = props => {
     addBook(bookInfo);
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = event.target.files[0];
+      setFileName(file.name);
+      saveImage(file).then(imageUrl => {
+        console.log(imageUrl.id);
+        setBookInfo({ ...bookInfo, imageUrl: imageUrl.id });
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
   return (
     <div className={classes.root}>
       <header>
@@ -93,11 +108,11 @@ export const AddBookComponent: React.FC<Props> = props => {
         />
       </section>
 
-      <label htmlFor="image" className={classes.hiddeLabel}>
-        Url Imagen
-      </label>
-      <TextField id="image" onChange={handleFieldChange('image')} label="Url Imagen" variant="outlined" />
-
+      <Button variant="contained" component="span" onClick={() => fileInput.current.click()}>
+        Añadir imagen
+      </Button>
+      <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
+      {fileName && <Typography variant="caption">Archivo seleccionado: {fileName}</Typography>}
       <label htmlFor="description" className={classes.hiddeLabel}>
         Descripción
       </label>
