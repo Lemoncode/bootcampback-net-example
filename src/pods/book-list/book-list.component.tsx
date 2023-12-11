@@ -20,7 +20,12 @@ export const BookList: React.FC<Props> = props => {
       <div className={classes.cardContainer} role="list">
         {bookList.map(book => (
           <Card className={classes.card} component="article" key={book.id} role="listitem" tabIndex={0}>
-            <CardMedia image={book.imageUrl} title={`Portada del libro ${book.title}`} />
+            <CardMedia
+              component="img"
+              image={book.imageUrl}
+              title={`Portada del libro ${book.title}`}
+              alt={book.imageAltText}
+            />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {book.title}

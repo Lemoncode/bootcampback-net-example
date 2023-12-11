@@ -30,13 +30,14 @@ export const card = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   width: 350px;
   height: 500px;
   padding: ${theme.spacing(2)};
 
   .${cardMediaClasses.root} {
-    height: 100%;
+    height: 70%;
     width: 100%;
     border-radius: 8px;
     background-position: top center;
