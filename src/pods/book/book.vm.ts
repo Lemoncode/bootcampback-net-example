@@ -7,7 +7,7 @@ interface Review {
 export interface BookVm {
   title: string;
   description: string;
-  image: string;
+  imageUrl: string;
   authors: string[];
   reviews: Review[];
 }
@@ -15,7 +15,7 @@ export interface BookVm {
 export const createEmptyBook = (): BookVm => ({
   title: '',
   description: '',
-  image: '',
+  imageUrl: '',
   authors: [],
   reviews: [],
 });

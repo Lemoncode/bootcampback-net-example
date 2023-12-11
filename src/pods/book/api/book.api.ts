@@ -1,6 +1,8 @@
-import { bookList, Book } from '@/core/mocks';
+import { Book } from '@/core/mocks';
+import axios from 'axios';
 
-export const getBook = async (id: string): Promise<Book> => {
-  const book = bookList.find(book => book.id === id);
-  return book ? book : Promise.reject('Book not found');
+export const getBookById = async (id: string): Promise<Book> => {
+  const baseUrl = '/api/books';
+  const { data } = await axios.get<Book>(`${baseUrl}/${id}`);
+  return data;
 };
