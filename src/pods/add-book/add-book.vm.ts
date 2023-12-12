@@ -1,6 +1,7 @@
 import { Lookup } from '@/common/models';
 
 export interface BookVm {
+  id?: string;
   title: string;
   authors: Lookup[];
   description: string;
@@ -9,6 +10,7 @@ export interface BookVm {
 }
 
 export const createEmptyBook = (): BookVm => ({
+  id: '',
   title: '',
   authors: [],
   description: '',

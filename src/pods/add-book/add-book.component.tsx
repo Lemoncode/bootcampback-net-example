@@ -9,14 +9,16 @@ import { saveImage } from './api';
 import * as classes from './add-book.styles';
 
 interface Props {
-  addBook: (book: BookVm) => void;
   authorList: Lookup[];
+  isEditMode?: boolean;
+  book: BookVm;
+  setBook: (book: BookVm) => void;
+  addBook: (book: BookVm) => void;
 }
 
 export const AddBookComponent: React.FC<Props> = props => {
-  const { addBook, authorList } = props;
+  const { addBook, authorList, isEditMode, book, setBook } = props;
   const navigate = useNavigate();
-  const [bookInfo, setBookInfo] = React.useState(createEmptyBook());
   const [fileName, setFileName] = React.useState<string>('');
   const fileInput = React.useRef(null);
 
@@ -25,12 +27,12 @@ export const AddBookComponent: React.FC<Props> = props => {
   };
 
   const handleFieldChange = (fieldId: string) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
-    if (Boolean(!value)) return setBookInfo({ ...bookInfo, [fieldId]: e.target.value });
-    setBookInfo({ ...bookInfo, [fieldId]: value });
+    if (Boolean(!value)) return setBook({ ...book, [fieldId]: e.target.value });
+    setBook({ ...book, [fieldId]: value });
   };
 
   const handleSaveBook = () => {
-    addBook(bookInfo);
+    addBook(book);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +40,7 @@ export const AddBookComponent: React.FC<Props> = props => {
       const file = event.target.files[0];
       setFileName(file.name);
       saveImage(file).then(imageUrl => {
-        setBookInfo({ ...bookInfo, imageUrl: imageUrl.id });
+        setBook({ ...book, imageUrl: imageUrl.id });
       });
     } catch (error) {
       throw new Error(error);
@@ -48,7 +50,7 @@ export const AddBookComponent: React.FC<Props> = props => {
     <div className={classes.root}>
       <header>
         <Typography className={classes.title} variant="h1" component={'h1'}>
-          Añadir Libro
+          {isEditMode ? 'Editar libro' : 'Añadir libro'}
         </Typography>
       </header>
 
@@ -56,7 +58,13 @@ export const AddBookComponent: React.FC<Props> = props => {
         <label htmlFor="title" className={classes.hiddeLabel}>
           Título
         </label>
-        <TextField id="title" onChange={handleFieldChange('title')} label="Título" variant="outlined" />
+        <TextField
+          value={book.title}
+          id="title"
+          onChange={handleFieldChange('title')}
+          label="Título"
+          variant="outlined"
+        />
         <Autocomplete
           multiple
           id="authors"
@@ -92,6 +100,7 @@ export const AddBookComponent: React.FC<Props> = props => {
       </label>
       <TextField
         id="description"
+        value={book.description}
         onChange={handleFieldChange('description')}
         label="Descripción"
         variant="outlined"
@@ -100,7 +109,7 @@ export const AddBookComponent: React.FC<Props> = props => {
       />
 
       <Button onClick={handleSaveBook} variant="contained">
-        Guardar
+        {isEditMode ? 'Actualizar libro' : 'Añadir libro'}
       </Button>
 
       <IconButton

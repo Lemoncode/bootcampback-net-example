@@ -6,7 +6,7 @@ interface Review {
 }
 
 export interface Book {
-  id?: string;
+  id?: number;
   title: string;
   imageUrl: string;
   imageAltText: string;

@@ -1,11 +1,19 @@
 import axios from 'axios';
 import { Author, Book, EditAuthorListResponse } from '@/core/mocks';
 
-export const addBook = async (book: Book): Promise<boolean> => true;
+export const addBook = async (book: Book): Promise<boolean> => {
+  console.log(book);
+  return true;
+};
 
 export const getActhorList = async (): Promise<Author[]> => {
   const { data } = await axios.get<EditAuthorListResponse>('/api/authors');
   return data.results;
+};
+
+export const getBook = async (id: string): Promise<Book> => {
+  const { data } = await axios.get<Book>(`/api/books/${id}`);
+  return data;
 };
 
 export const saveImage = async (file: File): Promise<{ id: string }> => {
