@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
-import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { IconButton, Typography } from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon, AddCircle as AddCircleIcon } from '@mui/icons-material';
 import { Table, Column } from '@/common/components';
 import { Author } from './edit-author-list.vm';
 import { PAGE_SIZE } from './edit-author-list.constants';
@@ -36,8 +36,24 @@ export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initial
     },
   ];
 
+  const handleAddAuthor = () => {
+    // navigate(switchRoutes.addBook);
+  };
+
   return (
     <div className={classes.root}>
+      <header>
+        <Typography variant="h1" component={'h1'}>
+          Edición de Autores
+        </Typography>
+      </header>
+
+      <IconButton className={classes.add} onClick={handleAddAuthor} aria-label="Añadir nuevo autor" size="large">
+        <Typography variant="caption" component={'span'}>
+          Añadir autor
+        </Typography>
+        <AddCircleIcon />
+      </IconButton>
       <Table
         rows={authorList}
         columns={columns}

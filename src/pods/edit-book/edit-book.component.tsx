@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, TextField, Button, Chip, IconButton, Autocomplete } from '@mui/material';
+import { Typography, TextField, Button, IconButton, Autocomplete } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Lookup } from '@/common/models';
 import { switchRoutes } from '@/core/router';
 import { BookVm, createEmptyBook } from './edit-book.vm';
@@ -72,8 +73,8 @@ export const EditBookComponent: React.FC<Props> = props => {
         />
       </section>
 
-      <Button variant="contained" component="span" onClick={() => fileInput.current.click()}>
-        Añadir imagen
+      <Button variant="contained" component="span" onClick={() => fileInput.current.click()} className={classes.button}>
+        <AddPhotoAlternateIcon /> <span>Añadir imagen</span>
       </Button>
       <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
       {book.imageUrl && (

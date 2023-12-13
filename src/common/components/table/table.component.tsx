@@ -9,6 +9,7 @@ import {
   TableRow,
   Pagination,
   PaginationItem,
+  Paper,
 } from '@mui/material';
 import { usePagination } from '@/common/hooks';
 import * as classes from './table.styles';
@@ -34,7 +35,7 @@ export const Table: React.FC<Props> = ({ rows, columns, totalRows, initialPage, 
   const totalPages = Math.ceil(totalRows / pageSize);
 
   return (
-    <TableContainer className={cx(className, classes.root)}>
+    <TableContainer component={Paper} className={cx(className, classes.root)}>
       <MuiTable>
         <TableHead>
           <TableRow>
