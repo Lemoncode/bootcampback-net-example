@@ -1,6 +1,4 @@
-import { Book } from './book-list.model';
-
-export const bookList: Book[] = [
+export const bookList = [
   {
     id: '1',
     title: 'Cien años de soledad',

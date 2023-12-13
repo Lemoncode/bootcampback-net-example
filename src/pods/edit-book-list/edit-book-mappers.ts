@@ -1,9 +1,11 @@
-import { Book } from '@/core/mocks';
-import * as viewModel from './edit-book-list.vm';
+import { Book } from './api';
+import { BookVm } from './edit-book-list.vm';
 
-const mapBookFromApiToVm = (book: Book): viewModel.BookVm => ({
-  ...book,
+const mapBookFromApiToVm = (book: Book): BookVm => ({
+  id: book.id.toString(),
+  title: book.title,
+  authors: book.authors,
 });
 
-export const mapBookListFromApiToVm = (bookList: Book[]): viewModel.BookVm[] =>
-  bookList.map(book => mapBookFromApiToVm(book));
+export const mapBookListFromApiToVm = (bookList: Book[]): BookVm[] =>
+  Boolean(bookList) ? bookList.map(book => mapBookFromApiToVm(book)) : [];

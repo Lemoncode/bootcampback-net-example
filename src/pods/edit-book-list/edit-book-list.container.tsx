@@ -1,11 +1,11 @@
 import React from 'react';
-import { trackPromise } from 'react-promise-tracker';
 import { getBookList } from './api';
 import { mapBookListFromApiToVm } from './edit-book-mappers';
 import { EditBookListComponent } from './edit-book-list.component';
+import { BookVm } from './edit-book-list.vm';
 
 export const EditBookList: React.FC = () => {
-  const [bookList, setBookList] = React.useState([]);
+  const [bookList, setBookList] = React.useState<BookVm[]>([]);
 
   const loadData = async () => {
     try {

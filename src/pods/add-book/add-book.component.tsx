@@ -19,7 +19,6 @@ interface Props {
 export const AddBookComponent: React.FC<Props> = props => {
   const { addBook, authorList, isEditMode, book, setBook } = props;
   const navigate = useNavigate();
-  const [fileName, setFileName] = React.useState<string>('');
   const fileInput = React.useRef(null);
 
   const handleGoBack = () => {
@@ -31,14 +30,11 @@ export const AddBookComponent: React.FC<Props> = props => {
     setBook({ ...book, [fieldId]: value });
   };
 
-  const handleSaveBook = () => {
-    addBook(book);
-  };
+  const handleSaveBook = () => addBook(book);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = event.target.files[0];
-      setFileName(file.name);
       saveImage(file).then(imageUrl => {
         setBook({ ...book, imageUrl: imageUrl.id });
       });
@@ -80,13 +76,14 @@ export const AddBookComponent: React.FC<Props> = props => {
         Añadir imagen
       </Button>
       <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
-      {fileName && (
+      {book.imageUrl && (
         <>
-          <Typography variant="caption">Archivo seleccionado: {fileName}</Typography>{' '}
+          <Typography variant="caption">Archivo seleccionado: {book.imageUrl}</Typography>
           <label htmlFor="imageAltText" className={classes.hiddeLabel}>
             Título
           </label>
           <TextField
+            value={book.imageAltText}
             id="imageAltText"
             onChange={handleFieldChange('imageAltText')}
             label="Descripción de la imagen"
@@ -96,13 +93,13 @@ export const AddBookComponent: React.FC<Props> = props => {
       )}
 
       <label htmlFor="description" className={classes.hiddeLabel}>
-        Descripción
+        Descripción del Libro
       </label>
       <TextField
         id="description"
         value={book.description}
         onChange={handleFieldChange('description')}
-        label="Descripción"
+        label="Descripción del libro"
         variant="outlined"
         minRows={4}
         multiline

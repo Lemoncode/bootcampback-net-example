@@ -8,16 +8,13 @@ interface Props {
   book: BookVm;
 }
 
-export const BookComponent: React.FC<Props> = ({ book }) => {
+export const BookComponent: React.FC<Props> = props => {
+  const { book } = props;
   const { isUserLogged } = useAuthContext();
 
   return (
     <div className={classes.root}>
-      <img
-        src={book?.imageUrl}
-        alt={`Portada del libro ${book?.title}`}
-        aria-label={`Portada del libro ${book?.title}`}
-      />
+      <img src={book.imageUrl} alt={book.imageAltText} aria-label={`Portada del libro ${book?.title}`} />
       <div>
         <Typography
           className={classes.title}
@@ -27,13 +24,13 @@ export const BookComponent: React.FC<Props> = ({ book }) => {
         >
           {book?.title}
         </Typography>
-        {book?.authors.map((author, index) => (
+        {book.authors.map((author, index) => (
           <Typography variant="h6" component={'h3'} key={index} aria-label={`Autor ${index + 1}: ${author}`}>
             {author}
           </Typography>
         ))}
         <Typography variant="body1" component={'p'} aria-label="Descripción del libro">
-          {book?.description}
+          {book.description}
         </Typography>
         {book?.reviews.length > 0 && (
           <div className={classes.reviewsContainer}>
