@@ -1,4 +1,5 @@
 import React from 'react';
+import { trackPromise } from 'react-promise-tracker';
 import { BookList } from './book-list.component';
 import { mapBookListFromApiToVm } from './book-list.mapppers';
 import { getBookList } from './api';
@@ -9,7 +10,7 @@ export const BookListContainer: React.FC = () => {
 
   const loadData = async () => {
     try {
-      const books = await getBookList();
+      const books = await trackPromise(getBookList());
       setBookList(mapBookListFromApiToVm(books));
     } catch (error) {
       throw error;
