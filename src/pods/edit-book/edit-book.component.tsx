@@ -4,9 +4,9 @@ import { Typography, TextField, Button, Chip, IconButton, Autocomplete } from '@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Lookup } from '@/common/models';
 import { switchRoutes } from '@/core/router';
-import { BookVm, createEmptyBook } from './add-book.vm';
+import { BookVm, createEmptyBook } from './edit-book.vm';
 import { saveImage } from './api';
-import * as classes from './add-book.styles';
+import * as classes from './edit-book.styles';
 
 interface Props {
   authorList: Lookup[];
@@ -16,7 +16,7 @@ interface Props {
   addBook: (book: BookVm) => void;
 }
 
-export const AddBookComponent: React.FC<Props> = props => {
+export const EditBookComponent: React.FC<Props> = props => {
   const { addBook, authorList, isEditMode, book, setBook } = props;
   const navigate = useNavigate();
   const fileInput = React.useRef(null);

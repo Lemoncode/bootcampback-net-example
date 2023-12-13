@@ -1,7 +1,7 @@
 import { Author, Book } from '@/core/mocks';
 import { Lookup } from '@/common/models';
-import { BookVm } from './add-book.vm';
-import { createEmptyBook } from './add-book.vm';
+import { BookVm } from './edit-book.vm';
+import { createEmptyBook } from './edit-book.vm';
 
 export const mapActhorFromApiToVm = (actor: Author): Lookup => ({
   id: actor.id.toString(),

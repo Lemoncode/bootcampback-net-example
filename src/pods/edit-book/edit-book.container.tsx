@@ -1,16 +1,16 @@
 import React from 'react';
 import { Lookup } from '@/common/models';
-import { AddBookComponent } from './add-book.component';
+import { EditBookComponent } from './edit-book.component';
 import { addBook, getActhorList, getBook } from './api';
-import { mapActhorListFromApiToVm, mapBookFromApiToVm, mapBookFromVmToApi } from './add.book.mappers';
-import { BookVm, createEmptyBook } from './add-book.vm';
+import { mapActhorListFromApiToVm, mapBookFromApiToVm, mapBookFromVmToApi } from './edit-book.mappers';
+import { BookVm, createEmptyBook } from './edit-book.vm';
 import { useParams } from 'react-router-dom';
 
 interface Props {
   isEditMode?: boolean;
 }
 
-export const AddBook: React.FC<Props> = props => {
+export const EditBook: React.FC<Props> = props => {
   const { isEditMode } = props;
   const { id } = useParams();
   const [authorList, setAuthorList] = React.useState<Lookup[]>([]);
@@ -35,7 +35,7 @@ export const AddBook: React.FC<Props> = props => {
   }, []);
 
   return (
-    <AddBookComponent
+    <EditBookComponent
       addBook={handleAddBook}
       authorList={authorList}
       isEditMode={isEditMode}
