@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import { switchRoutes } from '@/core/router';
-import { Book } from './book-list.vm';
+import { BookVm } from './book-list.vm';
 import * as classes from './book-list.styles';
 
 interface Props {
-  bookList: Book[];
+  bookList: BookVm[];
 }
 
 export const BookList: React.FC<Props> = props => {

@@ -1,17 +1,17 @@
-import { AuthorVm, createEmptyAuthor } from './edit-author.vm';
-import { Author } from './api';
+import * as apiModel from './api';
+import * as vm from './edit-author.vm';
 
-export const mapAuthorFromVmToApi = (author: AuthorVm): Author => ({
+export const mapAuthorFromVmToApi = (author: vm.AuthorVm): apiModel.Author => ({
   id: author.id,
   firstName: author.firstName,
   lastName: author.lastName,
 });
 
-export const mapAuthorFromApiToVm = (author: Author): AuthorVm =>
+export const mapAuthorFromApiToVm = (author: apiModel.Author): vm.AuthorVm =>
   Boolean(author)
     ? {
         id: author.id,
         firstName: author.firstName,
         lastName: author.lastName,
       }
-    : createEmptyAuthor();
+    : vm.createEmptyAuthor();
