@@ -14,11 +14,11 @@ interface Props {
   isEditMode?: boolean;
   book: BookVm;
   setBook: (book: BookVm) => void;
-  addBook: (book: BookVm) => void;
+  onSubmit: (book: BookVm) => void;
 }
 
-export const EditBookComponent: React.FC<Props> = props => {
-  const { addBook, authorList, isEditMode, book, setBook } = props;
+export const EditBook: React.FC<Props> = props => {
+  const { onSubmit, authorList, isEditMode, book, setBook } = props;
   const navigate = useNavigate();
   const fileInput = React.useRef(null);
 
@@ -31,7 +31,7 @@ export const EditBookComponent: React.FC<Props> = props => {
     setBook({ ...book, [fieldId]: value });
   };
 
-  const handleSaveBook = () => addBook(book);
+  const handleSaveBook = () => onSubmit(book);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     try {

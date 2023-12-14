@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { switchRoutes } from '@/core/router';
 import { IconButton, Typography } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, AddCircle as AddCircleIcon } from '@mui/icons-material';
 import { Table, Column } from '@/common/components';
@@ -16,9 +18,10 @@ interface Props {
 }
 
 export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initialPage, loadData, onEdit, onDelete }) => {
+  const navigate = useNavigate();
   const columns: Column[] = [
-    { id: 'firstName', label: 'Título' },
-    { id: 'lastName', label: 'Autores' },
+    { id: 'firstName', label: 'Nombre' },
+    { id: 'lastName', label: 'Apellidos' },
     { id: 'bookCount', label: 'Número de libros' },
     {
       id: 'actions',
@@ -37,7 +40,7 @@ export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initial
   ];
 
   const handleAddAuthor = () => {
-    // navigate(switchRoutes.addBook);
+    navigate(switchRoutes.addAuthor);
   };
 
   return (
