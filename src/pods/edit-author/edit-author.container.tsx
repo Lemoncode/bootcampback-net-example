@@ -19,6 +19,7 @@ export const EditAuthorContainer: React.FC<Props> = props => {
   const loadAuthor = async () => {
     try {
       const author = await getAuthor(id);
+      console.log(author);
       setAuthor(mapAuthorFromApiToVm(author));
     } catch (error) {
       throw error;
@@ -40,5 +41,5 @@ export const EditAuthorContainer: React.FC<Props> = props => {
     }
   }, []);
 
-  return <EditAuthor onSubmit={handleSubmit} isEditMode={isEditingMode} author={author} setAuthor={setAuthor} />;
+  return <EditAuthor onSubmit={handleSubmit} isEditingMode={isEditingMode} author={author} setAuthor={setAuthor} />;
 };

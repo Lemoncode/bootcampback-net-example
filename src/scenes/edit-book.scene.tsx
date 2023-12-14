@@ -5,7 +5,7 @@ import { EditBookContainer } from '@/pods/edit-book';
 export const EditBookScene: React.FC = () => {
   return (
     <AppLayout>
-      <EditBookContainer isEditMode={true} />
+      <EditBookContainer isEditMode />
     </AppLayout>
   );
 };

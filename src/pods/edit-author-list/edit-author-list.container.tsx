@@ -23,10 +23,6 @@ export const EditAuthorListContainer: React.FC = () => {
     [setAuthorList, setTotalRows]
   );
 
-  const handleEdit = (id: string) => {
-    console.log(`Edit author ${id}`);
-  };
-
   const handleDelete = (id: string) => {
     console.log(`Delete author ${id}`);
   };
@@ -37,7 +33,6 @@ export const EditAuthorListContainer: React.FC = () => {
       authorList={authorList}
       initialPage={INITIAL_PAGE}
       loadData={loadData}
-      onEdit={handleEdit}
       onDelete={handleDelete}
     />
   );

@@ -1,13 +1,13 @@
-import { addBook } from '../../pods/edit-book/api/edit-book.api';
 interface SwitchRoutes {
   root: string;
   login: string;
   dashboard: string;
   bookList: string;
-  addBook: string;
+  createBook: string;
   editBookList: string;
   editAuthorList: string;
-  addAuthor: string;
+  createAuthor: string;
+  editAuthor: (id: string) => string;
   bookDetail: (id: string) => string;
   editBook: (id: string) => string;
 }
@@ -17,10 +17,11 @@ export const switchRoutes: SwitchRoutes = {
   login: '/login',
   dashboard: '/dashboard',
   bookList: '/book-list',
-  addBook: '/add-book',
+  createBook: '/add-book',
   editBookList: '/edit-book',
   editAuthorList: '/edit-author',
-  addAuthor: '/add-author',
+  createAuthor: '/add-author',
+  editAuthor: (id: string) => `/edit-author/${id}`,
   bookDetail: (id: string) => `/book/${id}`,
   editBook: (id: string) => `/edit-book/${id}`,
 };

@@ -1,11 +1,11 @@
-import React from 'react';
 import { AppLayout } from '@/layouts';
 import { EditAuthorContainer } from '@/pods/edit-author';
+import React from 'react';
 
-export const CreateAuthorScene: React.FC = () => {
+export const EditAuthorScene: React.FC = () => {
   return (
     <AppLayout>
-      <EditAuthorContainer />
+      <EditAuthorContainer isEditingMode />
     </AppLayout>
   );
 };

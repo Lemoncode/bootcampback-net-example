@@ -13,11 +13,10 @@ interface Props {
   authorList: Author[];
   initialPage: number;
   loadData: (newPage: number) => void;
-  onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
-export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initialPage, loadData, onEdit, onDelete }) => {
+export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initialPage, loadData, onDelete }) => {
   const navigate = useNavigate();
   const columns: Column[] = [
     { id: 'firstName', label: 'Nombre' },
@@ -28,7 +27,11 @@ export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initial
       label: 'Comandos',
       cellRenderer: author => (
         <>
-          <IconButton onClick={() => onEdit(author.id)} aria-label={`editar ${author.firstName}`} size="large">
+          <IconButton
+            onClick={() => navigate(switchRoutes.editAuthor(author.id))}
+            aria-label={`editar ${author.firstName}`}
+            size="large"
+          >
             <EditIcon />
           </IconButton>
           <IconButton onClick={() => onDelete(author.id)} aria-label={`borrar ${author.firstName}`} size="large">
@@ -40,7 +43,7 @@ export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initial
   ];
 
   const handleAddAuthor = () => {
-    navigate(switchRoutes.addAuthor);
+    navigate(switchRoutes.createAuthor);
   };
 
   return (

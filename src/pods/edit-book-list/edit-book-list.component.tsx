@@ -40,7 +40,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
   };
 
   const handleAddBook = () => {
-    navigate(switchRoutes.addBook);
+    navigate(switchRoutes.createBook);
   };
 
   const handleEditBook = (id: string) => {

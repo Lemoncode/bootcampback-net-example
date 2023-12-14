@@ -7,14 +7,14 @@ import { AuthorVm } from './edit-author.vm';
 import * as classes from './edit-author.styles';
 
 interface Props {
-  isEditMode?: boolean;
+  isEditingMode?: boolean;
   author: AuthorVm;
   setAuthor: (author: AuthorVm) => void;
   onSubmit: (newAuthor: AuthorVm) => void;
 }
 
 export const EditAuthor: React.FC<Props> = props => {
-  const { onSubmit, isEditMode, author, setAuthor } = props;
+  const { onSubmit, isEditingMode, author, setAuthor } = props;
   const navigate = useNavigate();
 
   const handleFieldChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -24,7 +24,7 @@ export const EditAuthor: React.FC<Props> = props => {
     <div className={classes.root}>
       <header>
         <Typography className={classes.title} variant="h1" component={'h1'}>
-          {isEditMode ? 'Editar autor' : 'Añadir autor'}
+          {isEditingMode ? 'Editar autor' : 'Añadir autor'}
         </Typography>
       </header>
 
@@ -52,7 +52,7 @@ export const EditAuthor: React.FC<Props> = props => {
       </section>
 
       <Button onClick={() => onSubmit(author)} variant="contained">
-        {isEditMode ? 'Actualizar libro' : 'Añadir libro'}
+        {isEditingMode ? 'Actualizar autor' : 'Crear autor'}
       </Button>
 
       <IconButton
