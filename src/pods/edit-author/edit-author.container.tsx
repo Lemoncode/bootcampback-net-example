@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { switchRoutes } from '@/core/router';
-import { AuthorVm, createEmptyAuthor } from './edit-author.vm';
+import { AuthorVm, createEmptyAuthor, createEmptyError, ValidateAuthorFields } from './edit-author.vm';
 import { EditAuthor } from './edit-author.component';
 import { mapAuthorFromApiToVm, mapAuthorFromVmToApi } from './edit-author.mappers';
 import { getAuthor, saveAuthor } from './api';
+import { formValidation } from './edit-author.validations';
 
 interface Props {
   isEditingMode?: boolean;
@@ -15,11 +16,11 @@ export const EditAuthorContainer: React.FC<Props> = props => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [author, setAuthor] = React.useState<AuthorVm>(createEmptyAuthor());
+  const [errors, setErrors] = React.useState<ValidateAuthorFields>(createEmptyError());
 
   const loadAuthor = async () => {
     try {
       const author = await getAuthor(id);
-      console.log(author);
       setAuthor(mapAuthorFromApiToVm(author));
     } catch (error) {
       throw error;
@@ -28,8 +29,18 @@ export const EditAuthorContainer: React.FC<Props> = props => {
 
   const handleSubmit = (newAuthor: AuthorVm) => {
     try {
-      saveAuthor(mapAuthorFromVmToApi(newAuthor));
-      navigate(switchRoutes.editAuthorList);
+      formValidation.validateForm(newAuthor).then(formValidationResult => {
+        if (formValidationResult.succeeded) {
+          saveAuthor(mapAuthorFromVmToApi(newAuthor));
+          navigate(switchRoutes.editAuthorList);
+        } else {
+          const newErrors = { ...errors };
+          Object.keys(formValidationResult.fieldErrors).forEach(field => {
+            newErrors[field] = formValidationResult.fieldErrors[field].message;
+          });
+          setErrors(newErrors);
+        }
+      });
     } catch (error) {
       throw error;
     }
@@ -41,5 +52,14 @@ export const EditAuthorContainer: React.FC<Props> = props => {
     }
   }, []);
 
-  return <EditAuthor onSubmit={handleSubmit} isEditingMode={isEditingMode} author={author} setAuthor={setAuthor} />;
+  return (
+    <EditAuthor
+      author={author}
+      errors={errors}
+      isEditingMode={isEditingMode}
+      onSubmit={handleSubmit}
+      setAuthor={setAuthor}
+      onErrors={setErrors}
+    />
+  );
 };

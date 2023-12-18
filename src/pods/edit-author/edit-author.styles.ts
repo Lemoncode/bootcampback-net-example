@@ -27,6 +27,12 @@ export const textFieldsContainer = css`
   }
 `;
 
+export const fieldContainer = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${theme.spacing(1)};
+`;
+
 export const hiddeLabel = css`
   position: absolute;
   width: 1px;
@@ -50,4 +56,9 @@ export const goBack = css`
     font-size: 16px;
     font-weight: bold;
   }
+`;
+
+export const error = css`
+  color: ${theme.palette.error.main};
+  font-size: 14px;
 `;

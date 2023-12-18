@@ -9,3 +9,13 @@ export const createEmptyAuthor = (): AuthorVm => ({
   firstName: '',
   lastName: '',
 });
+
+export interface ValidateAuthorFields {
+  firstName: string;
+  lastName: string;
+}
+
+export const createEmptyError = (): ValidateAuthorFields => ({
+  firstName: '',
+  lastName: '',
+});

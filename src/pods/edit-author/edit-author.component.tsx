@@ -3,22 +3,31 @@ import { useNavigate } from 'react-router-dom';
 import { Button, IconButton, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { switchRoutes } from '@/core/router';
-import { AuthorVm } from './edit-author.vm';
+import { AuthorVm, ValidateAuthorFields } from './edit-author.vm';
 import * as classes from './edit-author.styles';
+import { formValidation } from './edit-author.validations';
 
 interface Props {
   isEditingMode?: boolean;
   author: AuthorVm;
+  errors: ValidateAuthorFields;
   setAuthor: (author: AuthorVm) => void;
   onSubmit: (newAuthor: AuthorVm) => void;
+  onErrors: (errors: ValidateAuthorFields) => void;
 }
 
 export const EditAuthor: React.FC<Props> = props => {
-  const { onSubmit, isEditingMode, author, setAuthor } = props;
+  const { author, errors, isEditingMode, onSubmit, setAuthor, onErrors } = props;
+
   const navigate = useNavigate();
 
-  const handleFieldChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleFieldChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setAuthor({ ...author, [field]: e.target.value });
+
+    formValidation.validateField(field, e.target.value).then(fieldValidationResult => {
+      onErrors({ ...errors, [field]: fieldValidationResult.message });
+    });
+  };
 
   return (
     <div className={classes.root}>
@@ -29,26 +38,38 @@ export const EditAuthor: React.FC<Props> = props => {
       </header>
 
       <section className={classes.textFieldsContainer}>
-        <label htmlFor="firstname" className={classes.hiddeLabel}>
-          Nombre
-        </label>
-        <TextField
-          value={author.firstName}
-          id="firstname"
-          onChange={handleFieldChange('firstName')}
-          label="Nombre"
-          variant="outlined"
-        />
-        <label htmlFor="lastname" className={classes.hiddeLabel}>
-          Apellidos
-        </label>
-        <TextField
-          value={author.lastName}
-          id="lastname"
-          onChange={handleFieldChange('lastName')}
-          label="Apellidos"
-          variant="outlined"
-        />
+        <div className={classes.fieldContainer}>
+          <label htmlFor="firstname" className={classes.hiddeLabel}>
+            Nombre
+          </label>
+          <TextField
+            value={author.firstName}
+            id="firstname"
+            onChange={handleFieldChange('firstName')}
+            label="Nombre"
+            variant="outlined"
+            aria-describedby="firstNameError"
+          />
+          <Typography id="firstNameError" className={classes.error} variant="caption" component={'span'}>
+            {errors.firstName}
+          </Typography>
+        </div>
+        <div className={classes.fieldContainer}>
+          <label htmlFor="lastname" className={classes.hiddeLabel}>
+            Apellidos
+          </label>
+          <TextField
+            value={author.lastName}
+            id="lastname"
+            onChange={handleFieldChange('lastName')}
+            label="Apellidos"
+            variant="outlined"
+            aria-describedby="lastNameError"
+          />
+          <Typography id="lastNameError" className={classes.error} variant="caption" component={'span'}>
+            {errors.lastName}
+          </Typography>
+        </div>
       </section>
 
       <Button onClick={() => onSubmit(author)} variant="contained">
