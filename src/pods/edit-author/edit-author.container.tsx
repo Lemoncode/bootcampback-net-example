@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useNotificationContext } from '@/core/notification';
 import { switchRoutes } from '@/core/router';
 import { AuthorVm, createEmptyAuthor, createEmptyError, ValidateAuthorFields } from './edit-author.vm';
 import { EditAuthor } from './edit-author.component';
@@ -14,6 +15,7 @@ interface Props {
 export const EditAuthorContainer: React.FC<Props> = props => {
   const { isEditingMode } = props;
   const { id } = useParams();
+  const { notify } = useNotificationContext();
   const navigate = useNavigate();
   const [author, setAuthor] = React.useState<AuthorVm>(createEmptyAuthor());
   const [errors, setErrors] = React.useState<ValidateAuthorFields>(createEmptyError());
@@ -32,6 +34,7 @@ export const EditAuthorContainer: React.FC<Props> = props => {
       formValidation.validateForm(newAuthor).then(formValidationResult => {
         if (formValidationResult.succeeded) {
           saveAuthor(mapAuthorFromVmToApi(newAuthor));
+          notify('Autor guardado correctamente', 'success');
           navigate(switchRoutes.editAuthorList);
         } else {
           const newErrors = { ...errors };
@@ -42,7 +45,7 @@ export const EditAuthorContainer: React.FC<Props> = props => {
         }
       });
     } catch (error) {
-      throw error;
+      notify('Error al guardar el autor', 'error');
     }
   };
 

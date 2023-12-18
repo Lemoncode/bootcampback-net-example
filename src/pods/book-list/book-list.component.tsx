@@ -11,7 +11,6 @@ interface Props {
 
 export const BookList: React.FC<Props> = props => {
   const { bookList } = props;
-
   return (
     <div className={classes.root} role="region">
       <Typography className={classes.title} variant="h1" component="h1" aria-label="Tienda online, listado de libros">

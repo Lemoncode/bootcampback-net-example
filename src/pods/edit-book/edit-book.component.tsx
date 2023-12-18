@@ -4,8 +4,9 @@ import { Typography, TextField, Button, IconButton, Autocomplete } from '@mui/ma
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Lookup } from '@/common/models';
+import { useNotificationContext } from '@/core/notification';
 import { switchRoutes } from '@/core/router';
-import { BookVm, createEmptyBook } from './edit-book.vm';
+import { BookVm } from './edit-book.vm';
 import { saveImage } from './api';
 import * as classes from './edit-book.styles';
 
@@ -20,6 +21,7 @@ interface Props {
 export const EditBook: React.FC<Props> = props => {
   const { onSubmit, authorList, isEditMode, book, setBook } = props;
   const navigate = useNavigate();
+  const { notify } = useNotificationContext();
   const fileInput = React.useRef(null);
 
   const handleGoBack = () => navigate(switchRoutes.editBookList);
@@ -35,7 +37,7 @@ export const EditBook: React.FC<Props> = props => {
         setBook({ ...book, imageUrl: imageUrl.id });
       });
     } catch (error) {
-      throw new Error(error);
+      notify('Error al subir la imagen', 'error');
     }
   };
   const availableAuthors = authorList.filter(
