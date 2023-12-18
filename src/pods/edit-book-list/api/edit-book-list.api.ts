@@ -6,3 +6,8 @@ export const getBookList = async (): Promise<Book[]> => {
   const { data } = await axios.get<Book[]>(`${baseUrl}?limit=6`);
   return data;
 };
+
+export const deleteBook = async (id: string): Promise<boolean> => {
+  const { data } = await axios.delete(`/api/books/${id}`);
+  return data;
+};

@@ -28,8 +28,3 @@ export const saveImage = async (file: File): Promise<{ id: string }> => {
   });
   return data;
 };
-
-export const deleteBook = async (id: string): Promise<boolean> => {
-  const { data } = await axios.delete(`/api/books/${id}`);
-  return data;
-};

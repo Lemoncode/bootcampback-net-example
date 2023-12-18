@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { switchRoutes } from '@/core/router';
 import { BookVm } from './edit-book-list.vm';
+import * as api from './api';
 import * as classes from './edit-book.list.styles';
 
 interface Props {
@@ -48,8 +49,9 @@ export const EditBookListComponent: React.FC<Props> = props => {
   };
 
   const handleDeleteBook = (id: string) => {
-    const newList = currentBookList.filter(book => book.id !== id);
-    setCurrentBookList(newList);
+    api.deleteBook(id);
+    const filteredList = currentBookList.filter(book => book.id !== id);
+    setCurrentBookList(filteredList);
   };
 
   React.useEffect(() => {
