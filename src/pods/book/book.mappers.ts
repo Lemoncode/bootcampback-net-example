@@ -1,4 +1,4 @@
-import { Book } from '@/core/mocks';
+import { Book } from './api';
 import { BookVm } from './book.vm';
 
 export const mapBookFromApiToVm = (book: Book): BookVm => ({
@@ -6,6 +6,10 @@ export const mapBookFromApiToVm = (book: Book): BookVm => ({
   imageUrl: book.imageUrl,
   imageAltText: book.imageAltText,
   description: book.description,
-  authors: book.authors,
+  authors: book.authors.map(author => ({
+    id: author.id.toString(),
+    firstName: author.firstName,
+    lastName: author.lastName,
+  })),
   reviews: book.reviews,
 });

@@ -26,7 +26,7 @@ export const BookComponent: React.FC<Props> = props => {
         </Typography>
         {book.authors.map((author, index) => (
           <Typography variant="h6" component={'h3'} key={index} aria-label={`Autor ${index + 1}: ${author}`}>
-            {author}
+            {author.firstName} {author.lastName}
           </Typography>
         ))}
         <Typography variant="body1" component={'p'} aria-label="Descripción del libro">

@@ -9,7 +9,11 @@ export interface BookVm {
   description: string;
   imageUrl: string;
   imageAltText: string;
-  authors: number[];
+  authors: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  }[];
   reviews: Review[];
 }
 
