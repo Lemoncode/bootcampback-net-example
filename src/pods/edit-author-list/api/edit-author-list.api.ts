@@ -6,3 +6,8 @@ export const getEditAuthorList = async ({ page, pageSize }: EditAuthorListParams
   const { data } = await axios.get<EditAuthorListResponse>(`${baseUrl}?page=${page}&pageSize=${pageSize}`);
   return data;
 };
+
+export const deleteAuthor = async (id: string): Promise<void> => {
+  const baseUrl = '/api/authors';
+  await axios.delete(`${baseUrl}/${id}`);
+};

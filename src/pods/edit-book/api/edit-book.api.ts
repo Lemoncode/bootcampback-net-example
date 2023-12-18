@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { Author, Book, EditAuthorListResponse } from '@/core/mocks';
+import { Author, EditAuthorListResponse } from '@/core/mocks';
+import { Book, SaveBook } from './edit-book.api-model';
 
-export const addBook = async (book: Book): Promise<boolean> => {
-  console.log(book);
-  return true;
+export const saveBook = async (book: SaveBook): Promise<boolean> => {
+  const { data } = book.id ? await axios.put(`/api/books/${book.id}`, book) : await axios.post('/api/books', book);
+  return data;
 };
 
 export const getActhorList = async (): Promise<Author[]> => {
@@ -25,5 +26,10 @@ export const saveImage = async (file: File): Promise<{ id: string }> => {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return data;
+};
+
+export const deleteBook = async (id: string): Promise<boolean> => {
+  const { data } = await axios.delete(`/api/books/${id}`);
   return data;
 };

@@ -1,7 +1,7 @@
-import { Author, Book } from '@/core/mocks';
+import { Author } from '@/core/mocks';
 import { Lookup } from '@/common/models';
 import { BookVm } from './edit-book.vm';
-import { createEmptyBook } from './edit-book.vm';
+import { Book, SaveBook } from './api';
 
 export const mapActhorFromApiToVm = (actor: Author): Lookup => ({
   id: actor.id.toString(),
@@ -11,18 +11,22 @@ export const mapActhorFromApiToVm = (actor: Author): Lookup => ({
 export const mapActhorListFromApiToVm = (actorList: Author[]): Lookup[] =>
   Boolean(actorList) ? actorList.map(mapActhorFromApiToVm) : [];
 
-export const mapBookFromVmToApi = (book: BookVm): Book => ({
+export const mapBookFromVmToApi = (book: BookVm): SaveBook => ({
+  id: book.id ? Number(book.id) : undefined,
   title: book.title,
-  authors: book.authors.map(author => Number(author.id)),
+  authorIds: book.authors.map(author => Number(author.id)),
   description: book.description,
-  imageUrl: book.imageUrl,
+  tempImageFileName: book.id ? undefined : book.imageUrl,
   imageAltText: book.imageAltText,
 });
 
-export const mapBookFromApiToVm = (book: Book, authors: Lookup[]): BookVm => ({
+export const mapBookFromApiToVm = (book: Book): BookVm => ({
   id: book.id.toString(),
   title: book.title,
-  authors: authors.filter(author => book.authors.includes(Number(author.id))),
+  authors: book.authors.map(author => ({
+    id: author.id.toString(),
+    name: `${author.firstName} ${author.lastName}`,
+  })),
   description: book.description,
   imageUrl: book.imageUrl,
   imageAltText: book.imageAltText,

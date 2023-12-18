@@ -22,17 +22,12 @@ export const EditBook: React.FC<Props> = props => {
   const navigate = useNavigate();
   const fileInput = React.useRef(null);
 
-  const handleGoBack = () => {
-    navigate(switchRoutes.editBookList);
-  };
-
+  const handleGoBack = () => navigate(switchRoutes.editBookList);
   const handleFieldChange = (fieldId: string) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
     if (Boolean(!value)) return setBook({ ...book, [fieldId]: e.target.value });
     setBook({ ...book, [fieldId]: value });
   };
-
   const handleSaveBook = () => onSubmit(book);
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = event.target.files[0];
@@ -43,6 +38,9 @@ export const EditBook: React.FC<Props> = props => {
       throw new Error(error);
     }
   };
+  const availableAuthors = authorList.filter(
+    author => !book.authors.some(selectedAuthor => selectedAuthor.id === author.id)
+  );
   return (
     <div className={classes.root}>
       <header>
@@ -63,9 +61,10 @@ export const EditBook: React.FC<Props> = props => {
           variant="outlined"
         />
         <Autocomplete
+          value={book.authors}
           multiple
           id="authors"
-          options={authorList}
+          options={availableAuthors}
           getOptionLabel={(option: Lookup) => option.name}
           filterSelectedOptions
           onChange={handleFieldChange('authors')}

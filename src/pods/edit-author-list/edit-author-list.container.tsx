@@ -23,9 +23,7 @@ export const EditAuthorListContainer: React.FC = () => {
     [setAuthorList, setTotalRows]
   );
 
-  const handleDelete = (id: string) => {
-    console.log(`Delete author ${id}`);
-  };
+  const handleDelete = (id: string) => api.deleteAuthor(id).then(() => loadData(INITIAL_PAGE));
 
   return (
     <EditAuthorList

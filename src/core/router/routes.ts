@@ -17,7 +17,7 @@ export const switchRoutes: SwitchRoutes = {
   login: '/login',
   dashboard: '/dashboard',
   bookList: '/book-list',
-  createBook: '/add-book',
+  createBook: '/create-book',
   editBookList: '/edit-book',
   editAuthorList: '/edit-author',
   createAuthor: '/add-author',
