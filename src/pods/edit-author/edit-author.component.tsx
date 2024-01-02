@@ -3,31 +3,60 @@ import { useNavigate } from 'react-router-dom';
 import { Button, IconButton, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { switchRoutes } from '@/core/router';
-import { AuthorVm, ValidateAuthorFields } from './edit-author.vm';
-import * as classes from './edit-author.styles';
+import { AuthorVm, AuthorsFieldsErrors, createEmptyAuthor, createEmptyFieldsErrors } from './edit-author.vm';
 import { formValidation } from './edit-author.validations';
+import * as classes from './edit-author.styles';
 
 interface Props {
-  isEditingMode?: boolean;
   author: AuthorVm;
-  errors: ValidateAuthorFields;
-  setAuthor: (author: AuthorVm) => void;
-  onSubmit: (newAuthor: AuthorVm) => void;
-  onErrors: (errors: ValidateAuthorFields) => void;
+  onSave: (author: AuthorVm) => void;
 }
 
 export const EditAuthor: React.FC<Props> = props => {
-  const { author, errors, isEditingMode, onSubmit, setAuthor, onErrors } = props;
-
+  const { author, onSave } = props;
   const navigate = useNavigate();
+  const [formData, setFormData] = React.useState<AuthorVm>(createEmptyAuthor);
+  const [errors, setErrors] = React.useState<AuthorsFieldsErrors>(createEmptyFieldsErrors());
 
-  const handleFieldChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthor({ ...author, [field]: e.target.value });
+  const isEditingMode = Boolean(author.id);
 
-    formValidation.validateField(field, e.target.value).then(fieldValidationResult => {
-      onErrors({ ...errors, [field]: fieldValidationResult.message });
+  const validateForm = () =>
+    formValidation.validateForm(formData).then(validationResult => {
+      setErrors(validationResult.fieldErrors as unknown as AuthorsFieldsErrors);
+      return validationResult.succeeded;
+    });
+
+  const validateField = (field: keyof AuthorVm) => {
+    formValidation.validateField(field, formData[field]).then(validationResult => {
+      setErrors({
+        ...errors,
+        [field]: validationResult,
+      });
     });
   };
+
+  const handleOnFieldChange = (field: keyof AuthorVm) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    validateField(field);
+    setFormData({
+      ...formData,
+      [field]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    validateForm().then(success => {
+      if (success) {
+        onSave(formData);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    if (author.id) {
+      setFormData(author);
+    }
+  }, [author]);
 
   return (
     <div className={classes.root}>
@@ -37,44 +66,44 @@ export const EditAuthor: React.FC<Props> = props => {
         </Typography>
       </header>
 
-      <section className={classes.textFieldsContainer}>
+      <form className={classes.textFieldsContainer} onSubmit={handleSubmit}>
         <div className={classes.fieldContainer}>
           <label htmlFor="firstname" className={classes.hiddeLabel}>
             Nombre
           </label>
           <TextField
-            value={author.firstName}
+            value={formData.firstName}
             id="firstname"
-            onChange={handleFieldChange('firstName')}
+            onChange={handleOnFieldChange('firstName')}
             label="Nombre"
             variant="outlined"
             aria-describedby="firstNameError"
+            error={!errors.firstName.succeeded}
+            helperText={errors.firstName.message}
+            autoComplete="off"
           />
-          <Typography id="firstNameError" className={classes.error} variant="caption" component={'span'}>
-            {errors.firstName}
-          </Typography>
         </div>
         <div className={classes.fieldContainer}>
           <label htmlFor="lastname" className={classes.hiddeLabel}>
             Apellidos
           </label>
           <TextField
-            value={author.lastName}
+            value={formData.lastName}
             id="lastname"
-            onChange={handleFieldChange('lastName')}
+            onChange={handleOnFieldChange('lastName')}
             label="Apellidos"
             variant="outlined"
             aria-describedby="lastNameError"
+            error={!errors.lastName.succeeded}
+            helperText={errors.lastName.message}
+            autoComplete="off"
           />
-          <Typography id="lastNameError" className={classes.error} variant="caption" component={'span'}>
-            {errors.lastName}
-          </Typography>
         </div>
-      </section>
 
-      <Button onClick={() => onSubmit(author)} variant="contained">
-        {isEditingMode ? 'Actualizar autor' : 'Crear autor'}
-      </Button>
+        <Button type="submit" variant="contained" className={classes.button}>
+          {isEditingMode ? 'Actualizar autor' : 'Crear autor'}
+        </Button>
+      </form>
 
       <IconButton
         className={classes.goBack}

@@ -1,3 +1,4 @@
+import { ValidationResult } from '@lemoncode/fonk';
 export interface AuthorVm {
   id?: number;
   firstName: string;
@@ -10,12 +11,18 @@ export const createEmptyAuthor = (): AuthorVm => ({
   lastName: '',
 });
 
-export interface ValidateAuthorFields {
-  firstName: string;
-  lastName: string;
+const createEmptyValidationResult = (): ValidationResult => ({
+  succeeded: true,
+  type: '',
+  message: '',
+});
+
+export interface AuthorsFieldsErrors {
+  firstName: ValidationResult;
+  lastName: ValidationResult;
 }
 
-export const createEmptyError = (): ValidateAuthorFields => ({
-  firstName: '',
-  lastName: '',
+export const createEmptyFieldsErrors = (): AuthorsFieldsErrors => ({
+  firstName: createEmptyValidationResult(),
+  lastName: createEmptyValidationResult(),
 });

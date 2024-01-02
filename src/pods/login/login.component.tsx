@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 import { useAuthContext } from '@/core/auth';
 import { switchRoutes } from '@/core/router';
-import { Credentials, CredentialsError, createEmptyCredentials, createEmptyCredentialsError } from './login.vm';
+import { Credentials, CredentialsErrors, createEmptyCredentials, createEmptyCredentialsError } from './login.vm';
 import { formValidation } from './login.validations';
 import * as classes from './login.styles';
 
@@ -12,18 +12,18 @@ export const Login: React.FC = () => {
   const { setIsUserLogged } = useAuthContext();
 
   const [formData, setFormData] = React.useState<Credentials>(createEmptyCredentials);
-  const [error, setError] = React.useState<CredentialsError>(createEmptyCredentialsError);
+  const [errors, setErrors] = React.useState<CredentialsErrors>(createEmptyCredentialsError);
 
   const validateForm = () =>
     formValidation.validateForm(formData).then(validationResult => {
-      setError(validationResult.fieldErrors as unknown as CredentialsError);
+      setErrors(validationResult.fieldErrors as unknown as CredentialsErrors);
       return validationResult.succeeded;
     });
 
   const validateField = (field: keyof Credentials) =>
-    formValidation.validateForm(formData).then(validationResult => {
-      setError({
-        ...error,
+    formValidation.validateField(field, formData[field]).then(validationResult => {
+      setErrors({
+        ...errors,
         [field]: validationResult,
       });
     });
@@ -58,9 +58,10 @@ export const Login: React.FC = () => {
             fullWidth
             label="Correo Electrónico"
             variant="outlined"
-            error={!error.email.succeeded}
-            helperText={error.email.message}
+            error={!errors.email.succeeded}
+            helperText={errors.email.message}
             onChange={handleOnFieldChange('email')}
+            autoComplete="off"
           />
           <TextField
             className={classes.input}
@@ -68,8 +69,8 @@ export const Login: React.FC = () => {
             label="Contraseña"
             type="password"
             variant="outlined"
-            error={!error.password.succeeded}
-            helperText={error.password.message}
+            error={!errors.password.succeeded}
+            helperText={errors.password.message}
             onChange={handleOnFieldChange('password')}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>

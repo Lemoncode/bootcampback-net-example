@@ -18,13 +18,12 @@ export const title = css`
 
 export const textFieldsContainer = css`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: ${theme.spacing(3)};
+`;
 
-  & > :nth-child(n) {
-    width: 100%;
-  }
+export const button = css`
+  width: 15rem;
 `;
 
 export const fieldContainer = css`

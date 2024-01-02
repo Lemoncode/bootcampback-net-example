@@ -16,12 +16,12 @@ const createEmptyValidationResult = (): ValidationResult => ({
   message: '',
 });
 
-export interface CredentialsError {
+export interface CredentialsErrors {
   email: ValidationResult;
   password: ValidationResult;
 }
 
-export const createEmptyCredentialsError = (): CredentialsError => ({
+export const createEmptyCredentialsError = (): CredentialsErrors => ({
   email: createEmptyValidationResult(),
   password: createEmptyValidationResult(),
 });

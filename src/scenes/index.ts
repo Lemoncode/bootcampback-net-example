@@ -6,5 +6,4 @@ export * from './edit-book-list.scene';
 export * from './edit-book.scene';
 export * from './create-book.scene';
 export * from './edit-author-list.scene';
-export * from './create-author.scene';
 export * from './edit-author.scene';
