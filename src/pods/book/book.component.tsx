@@ -2,10 +2,13 @@ import React from 'react';
 import { Button, IconButton, Typography } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuthContext } from '@/core/auth';
+import { useNotificationContext } from '@/core/notification';
 import { EditReview } from './components/edit-review.component';
 import { BookVm, Review, createEmptyReview } from './book.vm';
 import * as classes from './book.styles';
+import { deleteReview } from './api';
 
 interface Props {
   book: BookVm;
@@ -13,14 +16,21 @@ interface Props {
 
 export const BookComponent: React.FC<Props> = props => {
   const { book } = props;
+  const { notify } = useNotificationContext();
   const { isUserLogged } = useAuthContext();
   const [open, setOpen] = React.useState<boolean>(false);
   const [editingReview, setEditingReview] = React.useState(createEmptyReview);
 
-  const handleEditClick = (review: Review) => {
+  const handleEdit = (review: Review) => {
     setEditingReview(review);
     setOpen(true);
   };
+
+  const handleDelete = (id: string) =>
+    deleteReview(id)
+      .then(() => notify('Reseña eliminada con éxito'))
+      .catch(() => notify('Error al eliminar la reseña'));
+
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -61,9 +71,14 @@ export const BookComponent: React.FC<Props> = props => {
                     {review.reviewer}
                   </Typography>
                   {isUserLogged && (
-                    <IconButton aria-label="Editar reseña" onClick={() => handleEditClick(review)}>
-                      <EditIcon className={classes.editIcon} />
-                    </IconButton>
+                    <div className={classes.iconContainer}>
+                      <IconButton aria-label="Editar reseña" onClick={() => handleEdit(review)}>
+                        <EditIcon className={classes.icon} />
+                      </IconButton>
+                      <IconButton aria-label="Editar reseña" onClick={() => handleDelete(review.id)}>
+                        <DeleteIcon className={classes.icon} />
+                      </IconButton>
+                    </div>
                   )}
                 </div>
                 <Rating

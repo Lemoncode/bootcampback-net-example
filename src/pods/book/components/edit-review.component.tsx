@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField } from '@mui/material';
+import { Backdrop, Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField } from '@mui/material';
 import { Review, createEmptyReview } from '../book.vm';
 import * as api from '../api';
 import { mapReviewFromVmToApi } from '../book.mappers';
 import { useNotificationContext } from '@/core/notification';
+import * as classes from './edit-review.styles';
 
 interface Props {
   review?: Review;
@@ -32,19 +33,19 @@ export const EditReview: React.FC<Props> = props => {
   }, [bookId]);
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
-      <DialogTitle id="edit-review-title">Editar Reseña</DialogTitle>
-      <DialogContent>
+    <Dialog open={isOpen} onClose={onClose} className={classes.root}>
+      <DialogTitle id="edit-review-title">Reseña</DialogTitle>
+      <DialogContent className={classes.dialogContent}>
         <TextField
           value={formReview.reviewText}
           autoFocus
           margin="dense"
           id="review"
-          label="Reseña"
+          label="Escribe aquí tu reseña"
           fullWidth
           variant="standard"
           onChange={event => setFormReview({ ...formReview, reviewText: event.target.value })}
-          aria-label="Campo de texto para editar la reseña"
+          aria-label="Campo de texto para crear o editar la reseña"
         />
         <Rating
           name="rating"

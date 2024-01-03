@@ -29,7 +29,11 @@ export const row = css`
   align-items: center;
 `;
 
-export const editIcon = css`
+export const iconContainer = css`
+  display: flex;
+`;
+
+export const icon = css`
   font-size: 1.5rem;
   cursor: pointer;
 `;

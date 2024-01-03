@@ -20,3 +20,9 @@ export const saveReview = async (review: Review): Promise<boolean> => {
 
   return true;
 };
+
+export const deleteReview = async (id: string): Promise<boolean> => {
+  const baseUrl = '/api/reviews';
+  await axios.delete<boolean>(`${baseUrl}/${id}`);
+  return true;
+};
