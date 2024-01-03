@@ -24,7 +24,11 @@ export const AppBarComponent: React.FC = () => {
           <HomeIcon fontSize="large" />
         </Link>
         <div className={classes.rightContainer}>
-          <Link className={classes.link} to={switchRoutes.login} aria-label="Navegar a página de login">
+          <Link
+            className={classes.link}
+            to={switchRoutes.login}
+            aria-label="Navegar a página de login"
+          >
             <UserIcon fontSize="large" />
           </Link>
           <IconButton color="inherit" onClick={handleClick} aria-label="Cerrar sesión">

@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 import { useAuthContext } from '@/core/auth';
-import { switchRoutes } from '@/core/router';
 import { Credentials, CredentialsErrors, createEmptyCredentials, createEmptyCredentialsError } from './login.vm';
 import { formValidation } from './login.validations';
 import * as classes from './login.styles';
@@ -41,7 +40,7 @@ export const Login: React.FC = () => {
     validateForm().then(isValid => {
       if (isValid) {
         setIsUserLogged(true);
-        navigate(switchRoutes.dashboard);
+        navigate(-1);
       }
     });
   };

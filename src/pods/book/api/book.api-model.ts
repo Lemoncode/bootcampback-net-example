@@ -1,8 +1,23 @@
-interface Review {
-  id: string;
+export interface Review {
+  id?: number;
+  bookId: number;
   reviewer: string;
-  title: string;
-  text: string;
+  reviewText: string;
+  creationDate: string;
+  stars: number;
+}
+export interface ReviewParams {
+  results: Review[];
+  paginationInfo: {
+    currentPage: number;
+    resultsPerPage: number;
+    totalPages: number;
+    totalRows: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+    resulsFrom: number;
+    resultsTo: number;
+  };
 }
 
 export interface Book {
@@ -16,5 +31,4 @@ export interface Book {
     firstName: string;
     lastName: string;
   }[];
-  reviews?: Review[];
 }
