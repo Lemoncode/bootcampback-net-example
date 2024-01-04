@@ -1,13 +1,16 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { useNotificationContext } from '@/core/notification';
 import { mapBookFromApiToVm, mapReviewFromVmToApi, mapReviewListFromApiToVm } from './book.mappers';
 import { BookVm, createEmptyBook, Review } from './book.vm';
 import { Book } from './book.component';
 import * as api from './api';
 
-export const BookContainer: React.FC = () => {
-  const { id } = useParams();
+interface Props {
+  id: string;
+}
+
+export const BookContainer: React.FC<Props> = (props) => {
+  const { id } = props;
   const { notify } = useNotificationContext();
 
   const [book, setBook] = React.useState<BookVm>(createEmptyBook);
