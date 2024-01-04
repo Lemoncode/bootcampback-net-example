@@ -13,10 +13,12 @@ import { deleteReview } from './api';
 interface Props {
   book: BookVm;
   reviews: Review[];
+  onSaveReview: (review: Review) => void;
+  onDeleteReview: (id: string) => void;
 }
 
 export const Book: React.FC<Props> = props => {
-  const { book, reviews } = props;
+  const { book, reviews, onSaveReview, onDeleteReview } = props;
   const { notify } = useNotificationContext();
   const { isUserLogged } = useAuthContext();
   const [open, setOpen] = React.useState<boolean>(false);
@@ -26,11 +28,6 @@ export const Book: React.FC<Props> = props => {
     setEditingReview(review);
     setOpen(true);
   };
-
-  const handleDelete = (id: string) =>
-    deleteReview(id)
-      .then(() => notify('Reseña eliminada con éxito'))
-      .catch(() => notify('Error al eliminar la reseña'));
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -76,7 +73,7 @@ export const Book: React.FC<Props> = props => {
                       <IconButton aria-label="Editar reseña" onClick={() => handleEdit(review)}>
                         <EditIcon className={classes.icon} />
                       </IconButton>
-                      <IconButton aria-label="Editar reseña" onClick={() => handleDelete(review.id)}>
+                      <IconButton aria-label="Editar reseña" onClick={() => onDeleteReview(review.id)}>
                         <DeleteIcon className={classes.icon} />
                       </IconButton>
                     </div>
@@ -92,7 +89,7 @@ export const Book: React.FC<Props> = props => {
                 <Typography variant="body2" component={'p'} aria-labelledby={`review-creation-date-${index}`}>
                   {review.creationDate}
                 </Typography>
-                <EditReview isOpen={open} onClose={handleClose} bookId={book.id} />
+                <EditReview isOpen={open} onClose={handleClose} bookId={book.id} onSaveReview={onSaveReview} />
               </div>
             ))}
             {isUserLogged && (

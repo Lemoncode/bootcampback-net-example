@@ -1,30 +1,25 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField } from '@mui/material';
-import { useNotificationContext } from '@/core/notification';
 import { Review, createEmptyReview } from '../book.vm';
-import { mapReviewFromVmToApi } from '../book.mappers';
-import * as api from '../api';
 import * as classes from './edit-review.styles';
 
 interface Props {
   review?: Review;
   bookId?: string;
   isOpen: boolean;
+  onSaveReview: (review: Review) => void;
   onClose: () => void;
 }
 
 export const EditReview: React.FC<Props> = props => {
-  const { review, bookId, isOpen, onClose } = props;
+  const { review, bookId, isOpen, onSaveReview, onClose } = props;
   const [formReview, setFormReview] = React.useState(createEmptyReview);
-  const { notify } = useNotificationContext();
 
-  const handleSubmit = () =>
-    api
-      .saveReview(mapReviewFromVmToApi(formReview))
-      .then(() => onClose())
-      .then(() => setFormReview(createEmptyReview))
-      .then(() => notify('Reseña guardada con éxito'))
-      .catch(() => notify('Error al guardar la reseña'));
+  const handleSubmit = () => {
+    onSaveReview(formReview);
+    onClose();
+    setFormReview(createEmptyReview);
+  };
 
   React.useEffect(() => {
     if (bookId) {
