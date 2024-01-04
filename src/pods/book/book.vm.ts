@@ -27,7 +27,6 @@ export interface BookVm {
     firstName: string;
     lastName: string;
   }[];
-  reviews?: Review[];
 }
 
 export const createEmptyBook = (): BookVm => ({
@@ -37,5 +36,4 @@ export const createEmptyBook = (): BookVm => ({
   imageUrl: '',
   imageAltText: '',
   authors: [],
-  reviews: [],
 });

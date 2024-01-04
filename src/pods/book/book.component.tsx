@@ -12,10 +12,11 @@ import { deleteReview } from './api';
 
 interface Props {
   book: BookVm;
+  reviews: Review[];
 }
 
-export const BookComponent: React.FC<Props> = props => {
-  const { book } = props;
+export const Book: React.FC<Props> = props => {
+  const { book, reviews } = props;
   const { notify } = useNotificationContext();
   const { isUserLogged } = useAuthContext();
   const [open, setOpen] = React.useState<boolean>(false);
@@ -54,12 +55,12 @@ export const BookComponent: React.FC<Props> = props => {
         <Typography variant="body1" component={'p'} aria-label="Descripción del libro">
           {book.description}
         </Typography>
-        {book?.reviews.length > 0 && (
+        {reviews?.length > 0 && (
           <div className={classes.reviewsContainer}>
             <Typography variant="h4" component={'h4'} aria-label="Reseñas" tabIndex={1}>
               Reseñas:
             </Typography>
-            {book?.reviews.map((review, index) => (
+            {reviews?.map((review, index) => (
               <div
                 className={classes.reviewContainer}
                 key={review.id}
