@@ -1,8 +1,12 @@
 import { css } from '@emotion/css';
 
-export const root = css`
+export const table = css`
   display: flex;
   flex-direction: column;
+
+  & :last-child {
+    text-align: center;
+  }
 `;
 
 export const pagination = css`

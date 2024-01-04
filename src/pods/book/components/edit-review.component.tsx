@@ -5,7 +5,7 @@ import { Review, createEmptyReview } from '../book.vm';
 import * as classes from './edit-review.styles';
 
 interface Props {
-  review?: Review;
+  review: Review;
   isOpen: boolean;
   onSaveReview: (review: Review) => void;
   onClose: () => void;
@@ -14,7 +14,7 @@ interface Props {
 export const EditReview: React.FC<Props> = props => {
   const { review, isOpen, onSaveReview, onClose } = props;
   const { id } = useParams();
-  
+
   const [formReview, setFormReview] = React.useState(createEmptyReview);
 
   const handleCancel = () => {

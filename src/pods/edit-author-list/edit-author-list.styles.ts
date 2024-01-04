@@ -63,8 +63,3 @@ export const hiddeLabel = css`
   white-space: nowrap;
   border: 0;
 `;
-
-export const pagination = css`
-  display: flex;
-  justify-content: center;
-`;

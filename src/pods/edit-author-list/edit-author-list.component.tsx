@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { switchRoutes } from '@/core/router';
 import { IconButton, Typography } from '@mui/material';
-import { Edit as EditIcon, Delete as DeleteIcon, AddCircle as AddCircleIcon } from '@mui/icons-material';
-import { Table, Column } from '@/common/components';
+import { AddCircle as AddCircleIcon } from '@mui/icons-material';
+import { switchRoutes } from '@/core/router';
 import { Author } from './edit-author-list.vm';
-import { PAGE_SIZE } from './edit-author-list.constants';
 import * as classes from './edit-author-list.styles';
+import { TableComponent } from './components';
 
 interface Props {
   totalRows: number;
@@ -18,33 +17,8 @@ interface Props {
 
 export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initialPage, loadData, onDelete }) => {
   const navigate = useNavigate();
-  const columns: Column[] = [
-    { id: 'firstName', label: 'Nombre' },
-    { id: 'lastName', label: 'Apellidos' },
-    { id: 'bookCount', label: 'Número de libros' },
-    {
-      id: 'actions',
-      label: 'Comandos',
-      cellRenderer: author => (
-        <>
-          <IconButton
-            onClick={() => navigate(switchRoutes.editAuthor(author.id))}
-            aria-label={`editar ${author.firstName}`}
-            size="large"
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={() => onDelete(author.id)} aria-label={`borrar ${author.firstName}`} size="large">
-            <DeleteIcon />
-          </IconButton>
-        </>
-      ),
-    },
-  ];
 
-  const handleAddAuthor = () => {
-    navigate(switchRoutes.createAuthor);
-  };
+  const handleAddAuthor = () => navigate(switchRoutes.createAuthor);
 
   return (
     <div className={classes.root}>
@@ -60,13 +34,12 @@ export const EditAuthorList: React.FC<Props> = ({ totalRows, authorList, initial
         </Typography>
         <AddCircleIcon />
       </IconButton>
-      <Table
-        rows={authorList}
-        columns={columns}
-        totalRows={totalRows}
+      <TableComponent
+        authorList={authorList}
         initialPage={initialPage}
+        totalRows={totalRows}
         loadData={loadData}
-        pageSize={PAGE_SIZE}
+        onDelete={onDelete}
       />
     </div>
   );
