@@ -1,19 +1,26 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField } from '@mui/material';
 import { Review, createEmptyReview } from '../book.vm';
 import * as classes from './edit-review.styles';
 
 interface Props {
   review?: Review;
-  bookId?: string;
   isOpen: boolean;
   onSaveReview: (review: Review) => void;
   onClose: () => void;
 }
 
 export const EditReview: React.FC<Props> = props => {
-  const { review, bookId, isOpen, onSaveReview, onClose } = props;
+  const { review, isOpen, onSaveReview, onClose } = props;
+  const { id } = useParams();
+  
   const [formReview, setFormReview] = React.useState(createEmptyReview);
+
+  const handleCancel = () => {
+    onClose();
+    setFormReview(createEmptyReview);
+  };
 
   const handleSubmit = () => {
     onSaveReview(formReview);
@@ -22,10 +29,10 @@ export const EditReview: React.FC<Props> = props => {
   };
 
   React.useEffect(() => {
-    if (bookId) {
-      setFormReview({ ...formReview, bookId });
+    if (review && id) {
+      setFormReview({ ...review, bookId: id });
     }
-  }, [bookId]);
+  }, [review, id]);
 
   return (
     <Dialog open={isOpen} onClose={onClose} className={classes.root}>
@@ -52,7 +59,7 @@ export const EditReview: React.FC<Props> = props => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} aria-label="Cancelar edición de la reseña">
+        <Button onClick={handleCancel} aria-label="Cancelar edición de la reseña">
           Cancelar
         </Button>
         <Button onClick={handleSubmit} aria-label="Guardar la reseña">

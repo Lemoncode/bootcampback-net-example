@@ -7,7 +7,6 @@ import {
   BookScene,
   EditBookListScene,
   EditBookScene,
-  CreateBookScene,
   EditAuthorListScene,
   EditAuthorScene,
 } from '@/scenes';
@@ -21,7 +20,7 @@ export const RouterComponent: React.FC = () => {
         <Route path={switchRoutes.login} element={<LoginScene />} />
         <Route path={switchRoutes.dashboard} element={<DashboardScene />} />
         <Route path={switchRoutes.bookList} element={<BookListScene />} />
-        <Route path={switchRoutes.createBook} element={<CreateBookScene />} />
+        <Route path={switchRoutes.createBook} element={<EditBookScene />} />
         <Route path={switchRoutes.editBookList} element={<EditBookListScene />} />
         <Route path={switchRoutes.editAuthorList} element={<EditAuthorListScene />} />
         <Route path={switchRoutes.bookDetail(':id')} element={<BookScene />} />

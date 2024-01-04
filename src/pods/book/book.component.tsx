@@ -1,14 +1,11 @@
 import React from 'react';
-import { Button, IconButton, Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
+import { Button, IconButton, Typography, Rating } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuthContext } from '@/core/auth';
-import { useNotificationContext } from '@/core/notification';
 import { EditReview } from './components/edit-review.component';
 import { BookVm, Review, createEmptyReview } from './book.vm';
 import * as classes from './book.styles';
-import { deleteReview } from './api';
 
 interface Props {
   book: BookVm;
@@ -19,18 +16,17 @@ interface Props {
 
 export const Book: React.FC<Props> = props => {
   const { book, reviews, onSaveReview, onDeleteReview } = props;
-  const { notify } = useNotificationContext();
   const { isUserLogged } = useAuthContext();
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [editingReview, setEditingReview] = React.useState(createEmptyReview);
 
   const handleEdit = (review: Review) => {
     setEditingReview(review);
-    setOpen(true);
+    setIsOpen(true);
   };
 
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClickOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   return (
     <div className={classes.root}>
@@ -89,7 +85,7 @@ export const Book: React.FC<Props> = props => {
                 <Typography variant="body2" component={'p'} aria-labelledby={`review-creation-date-${index}`}>
                   {review.creationDate}
                 </Typography>
-                <EditReview isOpen={open} onClose={handleClose} bookId={book.id} onSaveReview={onSaveReview} />
+                <EditReview review={editingReview} isOpen={isOpen} onClose={handleClose} onSaveReview={onSaveReview} />
               </div>
             ))}
             {isUserLogged && (
