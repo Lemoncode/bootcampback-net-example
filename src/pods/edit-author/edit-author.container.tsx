@@ -4,7 +4,7 @@ import { AuthorVm, createEmptyAuthor } from './edit-author.vm';
 import { useNotificationContext } from '@/core/notification';
 import { EditAuthor } from './edit-author.component';
 import { mapAuthorFromApiToVm, mapAuthorFromVmToApi } from './edit-author.mappers';
-import { getAuthor, saveAuthor } from './api';
+import * as api from './api';
 
 interface Props {
   id: string;
@@ -18,19 +18,21 @@ export const EditAuthorContainer: React.FC<Props> = props => {
 
   const handleSave = (author: AuthorVm) => {
     const apiAuthor = mapAuthorFromVmToApi(author);
-    saveAuthor(apiAuthor)
-      .then(() => notify('Autor guardado'))
+    api
+      .saveAuthor(apiAuthor)
+      .then(() => notify('Autor guardado', 'success'))
       .then(() => navigate(-1))
-      .catch(() => notify('Ha ocurrido un error al guardar el autor'));
+      .catch(() => notify('Ha ocurrido un error al guardar el autor', 'error'));
   };
 
   React.useEffect(() => {
     if (id) {
-      getAuthor(id)
+      api
+        .getAuthor(id)
         .then(author => {
           setAuthor(mapAuthorFromApiToVm(author));
         })
-        .catch(() => notify('Ha ocurrido un error al cargar el autor'));
+        .catch(() => notify('Ha ocurrido un error al cargar el autor', 'error'));
     }
   }, [id]);
 

@@ -16,7 +16,7 @@ export const EditAuthor: React.FC<Props> = props => {
   const { author, onSave } = props;
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState<AuthorVm>(createEmptyAuthor);
-  const [errors, setErrors] = React.useState<AuthorFieldsErrors>(createEmptyFieldsErrors());
+  const [errors, setErrors] = React.useState<AuthorFieldsErrors>(createEmptyFieldsErrors);
 
   const isEditingMode = Boolean(author.id);
 

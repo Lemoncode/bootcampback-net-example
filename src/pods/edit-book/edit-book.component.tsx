@@ -5,49 +5,82 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Lookup } from '@/common/models';
 import { useNotificationContext } from '@/core/notification';
-import { switchRoutes } from '@/core/router';
-import { BookVm } from './edit-book.vm';
-import { saveImage } from './api';
+import { BookFieldsErrors, BookVm, createEmptyBook, createEmptyFieldsErrors } from './edit-book.vm';
+import { formValidation } from './edit-book.validations';
+import * as api from './api';
 import * as classes from './edit-book.styles';
 
 interface Props {
   authorList: Lookup[];
-  isEditMode?: boolean;
   book: BookVm;
-  setBook: (book: BookVm) => void;
   onSubmit: (book: BookVm) => void;
 }
 
 export const EditBook: React.FC<Props> = props => {
-  const { onSubmit, authorList, isEditMode, book, setBook } = props;
+  const { onSubmit, authorList, book } = props;
   const navigate = useNavigate();
   const { notify } = useNotificationContext();
-  const fileInput = React.useRef(null);
 
-  const handleGoBack = () => navigate(switchRoutes.editBookList);
-  const handleFieldChange = (fieldId: string) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
-    if (Boolean(!value)) return setBook({ ...book, [fieldId]: e.target.value });
-    setBook({ ...book, [fieldId]: value });
-  };
-  const handleSaveBook = () => onSubmit(book);
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const file = event.target.files[0];
-      saveImage(file).then(imageUrl => {
-        setBook({ ...book, imageUrl: imageUrl.id });
-      });
-    } catch (error) {
-      notify('Error al subir la imagen', 'error');
-    }
-  };
+  const [formData, setFormData] = React.useState<BookVm>(createEmptyBook);
+  const [errors, setErrors] = React.useState<BookFieldsErrors>(createEmptyFieldsErrors);
+
+  const fileInput = React.useRef(null);
   const availableAuthors = authorList.filter(
     author => !book.authors.some(selectedAuthor => selectedAuthor.id === author.id)
   );
+  const handleGoBack = () => navigate(-1);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+    api
+      .saveImage(file)
+      .then(imageUrl => {
+        setFormData({ ...formData, imageUrl: imageUrl.id });
+      })
+      .catch(() => notify('Error al subir la imagen', 'error'));
+  };
+
+  const validateForm = () =>
+    formValidation.validateForm(formData).then(validationResult => {
+      setErrors(validationResult.fieldErrors as unknown as BookFieldsErrors);
+      return validationResult.succeeded;
+    });
+
+  const validateField = (field: keyof BookVm) => {
+    formValidation.validateField(field, formData[field]).then(validationResult => {
+      setErrors({
+        ...errors,
+        [field]: validationResult,
+      });
+    });
+  };
+
+  const handleOnFieldChange = (field: keyof BookVm) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
+    validateField(field);
+    if (Boolean(!value)) return setFormData({ ...formData, [field]: e.target.value });
+    setFormData({ ...formData, [field]: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    validateForm().then(success => {
+      if (success) {
+        onSubmit(formData);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    if (book.id) {
+      setFormData(book);
+    }
+  }, [book]);
+
   return (
-    <div className={classes.root}>
+    <form className={classes.root} onSubmit={handleSubmit}>
       <header>
         <Typography className={classes.title} variant="h1" component={'h1'}>
-          {isEditMode ? 'Editar libro' : 'Añadir libro'}
+          {book.id ? 'Editar libro' : 'Añadir libro'}
         </Typography>
       </header>
 
@@ -56,40 +89,56 @@ export const EditBook: React.FC<Props> = props => {
           Título
         </label>
         <TextField
-          value={book.title}
+          value={formData.title}
           id="title"
-          onChange={handleFieldChange('title')}
+          onChange={handleOnFieldChange('title')}
           label="Título"
           variant="outlined"
+          error={!errors.title.succeeded}
+          helperText={errors.title.message}
         />
         <Autocomplete
-          value={book.authors}
+          value={formData.authors}
           multiple
           id="authors"
           options={availableAuthors}
           getOptionLabel={(option: Lookup) => option.name}
           filterSelectedOptions
-          onChange={handleFieldChange('authors')}
-          renderInput={params => <TextField {...params} label="Autores" />}
+          onChange={handleOnFieldChange('authors')}
+          renderInput={params => (
+            <TextField
+              {...params}
+              label="Autores"
+              error={!errors.authors.succeeded}
+              helperText={errors.authors.message}
+            />
+          )}
         />
       </section>
 
       <Button variant="contained" component="span" onClick={() => fileInput.current.click()} className={classes.button}>
         <AddPhotoAlternateIcon /> <span>Añadir imagen</span>
       </Button>
+      {errors.imageUrl && (
+        <Typography color="error" variant="caption">
+          {errors.imageUrl.message}
+        </Typography>
+      )}
       <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
-      {book.imageUrl && (
+      {formData.imageUrl && (
         <>
-          <Typography variant="caption">Archivo seleccionado: {book.imageUrl}</Typography>
+          <Typography variant="caption">Archivo seleccionado: {formData.imageUrl}</Typography>
           <label htmlFor="imageAltText" className={classes.hiddeLabel}>
             Título
           </label>
           <TextField
-            value={book.imageAltText}
+            value={formData.imageAltText}
             id="imageAltText"
-            onChange={handleFieldChange('imageAltText')}
+            onChange={handleOnFieldChange('imageAltText')}
             label="Descripción de la imagen"
             variant="outlined"
+            error={!errors.imageAltText.succeeded}
+            helperText={errors.imageAltText.message}
           />
         </>
       )}
@@ -99,16 +148,18 @@ export const EditBook: React.FC<Props> = props => {
       </label>
       <TextField
         id="description"
-        value={book.description}
-        onChange={handleFieldChange('description')}
+        value={formData.description}
+        onChange={handleOnFieldChange('description')}
         label="Descripción del libro"
         variant="outlined"
         minRows={4}
         multiline
+        error={!errors.description.succeeded}
+        helperText={errors.description.message}
       />
 
-      <Button onClick={handleSaveBook} variant="contained">
-        {isEditMode ? 'Actualizar libro' : 'Añadir libro'}
+      <Button type="submit" variant="contained">
+        {formData.id ? 'Actualizar libro' : 'Añadir libro'}
       </Button>
 
       <IconButton
@@ -122,6 +173,6 @@ export const EditBook: React.FC<Props> = props => {
           Regresar
         </Typography>
       </IconButton>
-    </div>
+    </form>
   );
 };

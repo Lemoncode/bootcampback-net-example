@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Lookup } from '@/common/models';
 import { useNotificationContext } from '@/core/notification';
 import { EditBook } from './edit-book.component';
@@ -8,24 +8,22 @@ import { BookVm, createEmptyBook } from './edit-book.vm';
 import * as api from './api';
 
 interface Props {
-  isEditMode?: boolean;
+  id: string;
 }
 
 export const EditBookContainer: React.FC<Props> = props => {
-  const { isEditMode } = props;
-  const { id } = useParams();
+  const { id } = props;
+  const navigate = useNavigate();
   const { notify } = useNotificationContext();
   const [authorList, setAuthorList] = React.useState<Lookup[]>([]);
   const [book, setBook] = React.useState<BookVm>(createEmptyBook());
 
-  const handleSubmit = (newBook: BookVm) => {
-    try {
-      api.saveBook(mapBookFromVmToApi(newBook));
-      notify('Libro guardado correctamente', 'success');
-    } catch (error) {
-      notify('Error al guardar el libro', 'error');
-    }
-  };
+  const handleSubmit = (newBook: BookVm) =>
+    api
+      .saveBook(mapBookFromVmToApi(newBook))
+      .then(() => notify('Libro guardado correctamente', 'success'))
+      .then(() => navigate(-1))
+      .catch(() => notify('Error al guardar el libro', 'error'));
 
   const loadData = async () => await api.getActhorList().then(mapActhorListFromApiToVm).then(setAuthorList);
 
@@ -33,12 +31,10 @@ export const EditBookContainer: React.FC<Props> = props => {
 
   React.useEffect(() => {
     loadData();
-    if (isEditMode) {
+    if (id) {
       loadBook();
     }
-  }, []);
+  }, [id]);
 
-  return (
-    <EditBook onSubmit={handleSubmit} authorList={authorList} isEditMode={isEditMode} book={book} setBook={setBook} />
-  );
+  return <EditBook onSubmit={handleSubmit} authorList={authorList} book={book} />;
 };
