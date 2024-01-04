@@ -17,12 +17,12 @@ const createEmptyValidationResult = (): ValidationResult => ({
   message: '',
 });
 
-export interface AuthorsFieldsErrors {
+export interface AuthorFieldsErrors {
   firstName: ValidationResult;
   lastName: ValidationResult;
 }
 
-export const createEmptyFieldsErrors = (): AuthorsFieldsErrors => ({
+export const createEmptyFieldsErrors = (): AuthorFieldsErrors => ({
   firstName: createEmptyValidationResult(),
   lastName: createEmptyValidationResult(),
 });

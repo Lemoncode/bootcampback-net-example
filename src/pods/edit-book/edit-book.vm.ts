@@ -1,3 +1,4 @@
+import { ValidationResult } from '@lemoncode/fonk';
 import { Lookup } from '@/common/models';
 
 export interface BookVm {
@@ -16,4 +17,26 @@ export const createEmptyBook = (): BookVm => ({
   description: '',
   imageUrl: '',
   imageAltText: '',
+});
+
+const createEmptyValidationResult = (): ValidationResult => ({
+  succeeded: true,
+  type: '',
+  message: '',
+});
+
+export interface BookFieldsErrors {
+  title: ValidationResult;
+  authors: ValidationResult;
+  description: ValidationResult;
+  imageUrl: ValidationResult;
+  imageAltText: ValidationResult;
+}
+
+export const createEmptyFieldsErrors = (): BookFieldsErrors => ({
+  title: createEmptyValidationResult(),
+  authors: createEmptyValidationResult(),
+  description: createEmptyValidationResult(),
+  imageUrl: createEmptyValidationResult(),
+  imageAltText: createEmptyValidationResult(),
 });

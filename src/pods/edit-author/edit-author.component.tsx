@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, IconButton, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { switchRoutes } from '@/core/router';
-import { AuthorVm, AuthorsFieldsErrors, createEmptyAuthor, createEmptyFieldsErrors } from './edit-author.vm';
+import { AuthorVm, AuthorFieldsErrors, createEmptyAuthor, createEmptyFieldsErrors } from './edit-author.vm';
 import { formValidation } from './edit-author.validations';
 import * as classes from './edit-author.styles';
 
@@ -16,13 +16,13 @@ export const EditAuthor: React.FC<Props> = props => {
   const { author, onSave } = props;
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState<AuthorVm>(createEmptyAuthor);
-  const [errors, setErrors] = React.useState<AuthorsFieldsErrors>(createEmptyFieldsErrors());
+  const [errors, setErrors] = React.useState<AuthorFieldsErrors>(createEmptyFieldsErrors());
 
   const isEditingMode = Boolean(author.id);
 
   const validateForm = () =>
     formValidation.validateForm(formData).then(validationResult => {
-      setErrors(validationResult.fieldErrors as unknown as AuthorsFieldsErrors);
+      setErrors(validationResult.fieldErrors as unknown as AuthorFieldsErrors);
       return validationResult.succeeded;
     });
 
