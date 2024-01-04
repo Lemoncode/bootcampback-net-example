@@ -85,18 +85,18 @@ export const Book: React.FC<Props> = props => {
                 <Typography variant="body2" component={'p'} aria-labelledby={`review-creation-date-${index}`}>
                   {review.creationDate}
                 </Typography>
-                <EditReview review={editingReview} isOpen={isOpen} onClose={handleClose} onSaveReview={onSaveReview} />
               </div>
             ))}
-            {isUserLogged && (
-              <>
-                <Button variant="contained" color="primary" aria-label="Crear reseña" onClick={handleClickOpen}>
-                  Crear Reseña
-                </Button>
-              </>
-            )}
           </div>
         )}
+        {isUserLogged && (
+          <>
+            <Button variant="contained" color="primary" aria-label="Crear reseña" onClick={handleClickOpen}>
+              Crear Reseña
+            </Button>
+          </>
+        )}
+        <EditReview review={editingReview} isOpen={isOpen} onClose={handleClose} onSaveReview={onSaveReview} />
       </div>
     </div>
   );

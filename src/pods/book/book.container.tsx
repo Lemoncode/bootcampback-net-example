@@ -21,8 +21,7 @@ export const BookContainer: React.FC = () => {
       })
       .catch(() => notify('Error al cargar los datos del libro'));
 
-  const handleSaveReview = (review: Review) => {
-    console.log(mapReviewFromVmToApi(review));
+  const handleSaveReview = (review: Review) =>
     api
       .saveReview(mapReviewFromVmToApi(review))
       .then(() => {
@@ -30,7 +29,7 @@ export const BookContainer: React.FC = () => {
         loadData();
       })
       .catch(() => notify('Error al guardar la reseña'));
-  };
+
   const handleDeleteReview = (id: string) =>
     api
       .deleteReview(id)
