@@ -19,7 +19,7 @@ export const createEmptyBook = (): BookVm => ({
   imageAltText: '',
 });
 
-const createEmptyValidationResult = (): ValidationResult => ({
+export const createEmptyValidationResult = (): ValidationResult => ({
   succeeded: true,
   type: '',
   message: '',

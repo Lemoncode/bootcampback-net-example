@@ -20,7 +20,7 @@ export const EditAuthorContainer: React.FC<Props> = props => {
     const apiAuthor = mapAuthorFromVmToApi(author);
     api
       .saveAuthor(apiAuthor)
-      .then(() => notify('Autor guardado', 'success'))
+      .then(() => notify('Autor guardado correctamente', 'success'))
       .then(() => navigate(-1))
       .catch(() => notify('Ha ocurrido un error al guardar el autor', 'error'));
   };

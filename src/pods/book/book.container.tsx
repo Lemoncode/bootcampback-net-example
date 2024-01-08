@@ -9,7 +9,7 @@ interface Props {
   id: string;
 }
 
-export const BookContainer: React.FC<Props> = (props) => {
+export const BookContainer: React.FC<Props> = props => {
   const { id } = props;
   const { notify } = useNotificationContext();
 
@@ -22,25 +22,25 @@ export const BookContainer: React.FC<Props> = (props) => {
         setBook(mapBookFromApiToVm(book));
         setReviews(mapReviewListFromApiToVm(reviewParams.results));
       })
-      .catch(() => notify('Error al cargar los datos del libro'));
+      .catch(() => notify('Error al cargar los datos del libro', 'error'));
 
   const handleSaveReview = (review: Review) =>
     api
       .saveReview(mapReviewFromVmToApi(review))
       .then(() => {
-        notify('Reseña guardada con éxito');
+        notify('Reseña guardada con éxito', 'success');
         loadData();
       })
-      .catch(() => notify('Error al guardar la reseña'));
+      .catch(() => notify('Error al guardar la reseña', 'error'));
 
   const handleDeleteReview = (id: string) =>
     api
       .deleteReview(id)
       .then(() => {
-        notify('Reseña eliminada con éxito');
+        notify('Reseña eliminada con éxito', 'success');
         loadData();
       })
-      .catch(() => notify('Error al eliminar la reseña'));
+      .catch(() => notify('Error al eliminar la reseña', 'error'));
 
   React.useEffect(() => {
     loadData();

@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton, Typography } from '@mui/material';
 import { AddCircle as AddCircleIcon } from '@mui/icons-material';
 import { switchRoutes } from '@/core/router';
+import { TableComponent } from './components';
 import { Author } from './edit-author-list.vm';
 import * as classes from './edit-author-list.styles';
-import { TableComponent } from './components';
 
 interface Props {
   totalRows: number;

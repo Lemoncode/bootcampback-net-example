@@ -5,7 +5,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Lookup } from '@/common/models';
 import { useNotificationContext } from '@/core/notification';
-import { BookFieldsErrors, BookVm, createEmptyBook, createEmptyFieldsErrors } from './edit-book.vm';
+import {
+  BookFieldsErrors,
+  BookVm,
+  createEmptyBook,
+  createEmptyFieldsErrors,
+  createEmptyValidationResult,
+} from './edit-book.vm';
 import { formValidation } from './edit-book.validations';
 import * as api from './api';
 import * as classes from './edit-book.styles';
@@ -36,6 +42,7 @@ export const EditBook: React.FC<Props> = props => {
       .saveImage(file)
       .then(imageUrl => {
         setFormData({ ...formData, imageUrl: imageUrl.id });
+        setErrors({ ...errors, imageUrl: createEmptyValidationResult() });
       })
       .catch(() => notify('Error al subir la imagen', 'error'));
   };
@@ -119,7 +126,7 @@ export const EditBook: React.FC<Props> = props => {
       <Button variant="contained" component="span" onClick={() => fileInput.current.click()} className={classes.button}>
         <AddPhotoAlternateIcon /> <span>Añadir imagen</span>
       </Button>
-      {errors.imageUrl && (
+      {!errors.imageUrl.succeeded && (
         <Typography color="error" variant="caption">
           {errors.imageUrl.message}
         </Typography>

@@ -27,7 +27,13 @@ export const EditAuthorListContainer: React.FC = () => {
     }
   };
 
-  const handleDelete = (id: string) => api.deleteAuthor(id).then(() => loadData(INITIAL_PAGE));
+  const handleDelete = (id: string) => {
+    api
+      .deleteAuthor(id)
+      .then(() => loadData(INITIAL_PAGE))
+      .then(() => notify('Autor eliminado con éxito', 'success'))
+      .catch(() => notify('Error al eliminar el autor', 'error'));
+  };
 
   return (
     <EditAuthorList
