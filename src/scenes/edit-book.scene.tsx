@@ -1,11 +1,13 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { AppLayout } from '@/layouts';
-import { EditBook } from '@/pods/edit-book';
+import { EditBookContainer } from '@/pods/edit-book';
 
 export const EditBookScene: React.FC = () => {
+  const { id } = useParams();
   return (
     <AppLayout>
-      <EditBook />
+      <EditBookContainer id={id} />
     </AppLayout>
   );
 };

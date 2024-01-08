@@ -18,21 +18,30 @@ export const title = css`
 
 export const textFieldsContainer = css`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: ${theme.spacing(3)};
-
-  & > :nth-child(n) {
-    width: 100%;
-  }
 `;
 
-export const chipsContainer = css`
+export const button = css`
+  width: 15rem;
+`;
+
+export const fieldContainer = css`
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: ${theme.spacing(1)};
-  min-width: 100%;
+`;
+
+export const hiddeLabel = css`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `;
 
 export const goBack = css`
@@ -48,14 +57,7 @@ export const goBack = css`
   }
 `;
 
-export const hiddeLabel = css`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+export const error = css`
+  color: ${theme.palette.error.main};
+  font-size: 14px;
 `;

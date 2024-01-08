@@ -1,21 +1,39 @@
-interface Review {
+export interface Review {
+  id?: string;
+  bookId: string;
   reviewer: string;
-  title: string;
-  text: string;
+  reviewText: string;
+  creationDate: string;
+  stars: number;
 }
 
+export const createEmptyReview = (): Review => ({
+  id: undefined,
+  bookId: '',
+  reviewer: 'Usuario Anónimo',
+  reviewText: '',
+  creationDate: undefined,
+  stars: 0,
+});
+
 export interface BookVm {
+  id?: string;
   title: string;
   description: string;
-  image: string;
-  authors: string[];
-  reviews: Review[];
+  imageUrl: string;
+  imageAltText: string;
+  authors: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  }[];
 }
 
 export const createEmptyBook = (): BookVm => ({
+  id: '',
   title: '',
   description: '',
-  image: '',
+  imageUrl: '',
+  imageAltText: '',
   authors: [],
-  reviews: [],
 });

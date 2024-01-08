@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 import BookIcon from '@mui/icons-material/MenuBook';
 import PersonIcon from '@mui/icons-material/Person';
 import { switchRoutes } from '@/core/router';
-import * as classes from './dashboar.styles';
+import * as classes from './dashboard.styles';
 
 export const DashboardComponent: React.FC = () => {
   return (
@@ -19,7 +19,12 @@ export const DashboardComponent: React.FC = () => {
             Libros
           </Typography>
         </Link>
-        <Link className={classes.card} to={'#'} aria-label="Edición, lista de autores" tabIndex={0}>
+        <Link
+          className={classes.card}
+          to={switchRoutes.editAuthorList}
+          aria-label="Edición, lista de autores"
+          tabIndex={0}
+        >
           <PersonIcon className={classes.cardIcon} />
           <Typography variant="button" component="div">
             Autores

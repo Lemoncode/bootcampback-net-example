@@ -1,57 +1,92 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography, TextField, Button, Chip, IconButton } from '@mui/material';
+import { Typography, TextField, Button, IconButton, Autocomplete } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { switchRoutes } from '@/core/router';
-import { BookVm } from './edit-book.vm';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { Lookup } from '@/common/models';
+import { useNotificationContext } from '@/core/notification';
+import {
+  BookFieldsErrors,
+  BookVm,
+  createEmptyBook,
+  createEmptyFieldsErrors,
+  createEmptyValidationResult,
+} from './edit-book.vm';
+import { formValidation } from './edit-book.validations';
+import * as api from './api';
 import * as classes from './edit-book.styles';
 
 interface Props {
+  authorList: Lookup[];
   book: BookVm;
-  updateBook: (book: BookVm) => void;
+  onSubmit: (book: BookVm) => void;
 }
 
-export const EditBookComponent: React.FC<Props> = props => {
-  const { book, updateBook } = props;
-  const [bookInfo, setBookInfo] = React.useState(book);
-  const [autores, setAutores] = React.useState(bookInfo.authors);
-  const [newAuthor, setNewAuthor] = React.useState('');
-
+export const EditBook: React.FC<Props> = props => {
+  const { onSubmit, authorList, book } = props;
   const navigate = useNavigate();
+  const { notify } = useNotificationContext();
 
-  const handleGoBack = () => {
-    navigate(switchRoutes.editBookList);
+  const [formData, setFormData] = React.useState<BookVm>(createEmptyBook);
+  const [errors, setErrors] = React.useState<BookFieldsErrors>(createEmptyFieldsErrors);
+
+  const fileInput = React.useRef(null);
+  const availableAuthors = authorList.filter(
+    author => !book.authors.some(selectedAuthor => selectedAuthor.id === author.id)
+  );
+  const handleGoBack = () => navigate(-1);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+    api
+      .saveImage(file)
+      .then(imageUrl => {
+        setFormData({ ...formData, imageUrl: imageUrl.id });
+        setErrors({ ...errors, imageUrl: createEmptyValidationResult() });
+      })
+      .catch(() => notify('Error al subir la imagen', 'error'));
   };
 
-  const handleAddAuthor = () => {
-    setAutores([...autores, newAuthor]);
-    setNewAuthor('');
+  const validateForm = () =>
+    formValidation.validateForm(formData).then(validationResult => {
+      setErrors(validationResult.fieldErrors as unknown as BookFieldsErrors);
+      return validationResult.succeeded;
+    });
+
+  const validateField = (field: keyof BookVm) => {
+    formValidation.validateField(field, formData[field]).then(validationResult => {
+      setErrors({
+        ...errors,
+        [field]: validationResult,
+      });
+    });
   };
 
-  const handleDeleteAuthor = index => {
-    const nuevosAutores = autores.filter((_, i) => i !== index);
-    setAutores(nuevosAutores);
+  const handleOnFieldChange = (field: keyof BookVm) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
+    validateField(field);
+    value ? setFormData({ ...formData, [field]: value }) : setFormData({ ...formData, [field]: e.target.value });
   };
 
-  const handleFieldChange = (fieldId: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setBookInfo({ ...book, [fieldId]: value });
-  };
-
-  const handleSaveBook = () => {
-    updateBook(bookInfo);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    validateForm().then(success => {
+      if (success) {
+        onSubmit(formData);
+      }
+    });
   };
 
   React.useEffect(() => {
-    setBookInfo(book);
-    setAutores(book.authors);
+    if (book.id) {
+      setFormData(book);
+    }
   }, [book]);
 
   return (
-    <div className={classes.root}>
+    <form className={classes.root} onSubmit={handleSubmit}>
       <header>
         <Typography className={classes.title} variant="h1" component={'h1'}>
-          Editar Libro
+          {book.id ? 'Editar libro' : 'Añadir libro'}
         </Typography>
       </header>
 
@@ -60,77 +95,77 @@ export const EditBookComponent: React.FC<Props> = props => {
           Título
         </label>
         <TextField
+          value={formData.title}
           id="title"
-          onChange={handleFieldChange('title')}
+          onChange={handleOnFieldChange('title')}
           label="Título"
           variant="outlined"
-          value={bookInfo.title}
+          error={!errors.title.succeeded}
+          helperText={errors.title.message}
         />
-
-        <label htmlFor="author" className={classes.hiddeLabel}>
-          Autores
-        </label>
-        <TextField
-          id="author"
-          onChange={handleFieldChange('authors')}
-          label="Autores"
-          variant="outlined"
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <div className={classes.chipsContainer}>
-                {autores.map((autor, index) => (
-                  <Chip key={index} label={autor} onDelete={() => handleDeleteAuthor(index)} />
-                ))}
-              </div>
-            ),
-            readOnly: true,
-          }}
-        />
-
-        <label htmlFor="addAuthor" className={classes.hiddeLabel}>
-          Añadir autor
-        </label>
-        <TextField
-          id="addAuthor"
-          label="Añadir autor"
-          variant="outlined"
-          fullWidth
-          onChange={e => setNewAuthor(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              handleAddAuthor();
-            }
-          }}
+        <Autocomplete
+          value={formData.authors}
+          multiple
+          id="authors"
+          options={availableAuthors}
+          getOptionLabel={(option: Lookup) => option.name}
+          filterSelectedOptions
+          onChange={handleOnFieldChange('authors')}
+          renderInput={params => (
+            <TextField
+              {...params}
+              label="Autores"
+              error={!errors.authors.succeeded}
+              helperText={errors.authors.message}
+            />
+          )}
         />
       </section>
 
-      <label htmlFor="image" className={classes.hiddeLabel}>
-        Url Imagen
-      </label>
-      <TextField
-        id="image"
-        onChange={handleFieldChange('image')}
-        label="Url Imagen"
-        variant="outlined"
-        value={bookInfo.imageUrl}
-      />
+      <Button variant="contained" component="span" onClick={() => fileInput.current.click()} className={classes.button}>
+        <AddPhotoAlternateIcon /> <span>Añadir imagen</span>
+      </Button>
+      {!errors.imageUrl.succeeded && (
+        <Typography color="error" variant="caption">
+          {errors.imageUrl.message}
+        </Typography>
+      )}
+      <input type="file" ref={fileInput} style={{ display: 'none' }} onChange={handleFileChange} />
+      {formData.imageUrl && (
+        <>
+          <Typography variant="caption">Archivo seleccionado: {formData.imageUrl}</Typography>
+          <label htmlFor="imageAltText" className={classes.hiddeLabel}>
+            Título
+          </label>
+          <TextField
+            value={formData.imageAltText}
+            id="imageAltText"
+            onChange={handleOnFieldChange('imageAltText')}
+            label="Descripción de la imagen"
+            variant="outlined"
+            error={!errors.imageAltText.succeeded}
+            helperText={errors.imageAltText.message}
+          />
+        </>
+      )}
 
       <label htmlFor="description" className={classes.hiddeLabel}>
-        Descripción
+        Descripción del Libro
       </label>
       <TextField
         id="description"
-        onChange={handleFieldChange('description')}
-        label="Descripción"
+        value={formData.description}
+        onChange={handleOnFieldChange('description')}
+        label="Descripción del libro"
         variant="outlined"
         minRows={4}
         multiline
-        value={bookInfo.description}
+        error={!errors.description.succeeded}
+        helperText={errors.description.message}
       />
 
-      <Button onClick={handleSaveBook} variant="contained">
-        Guardar
+      <Button type="submit" variant="contained">
+        {formData.id ? 'Actualizar libro' : 'Añadir libro'}
       </Button>
 
       <IconButton
@@ -144,6 +179,6 @@ export const EditBookComponent: React.FC<Props> = props => {
           Regresar
         </Typography>
       </IconButton>
-    </div>
+    </form>
   );
 };

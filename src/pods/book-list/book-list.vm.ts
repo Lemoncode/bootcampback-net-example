@@ -1,5 +1,6 @@
-export interface Book {
+export interface BookVm {
   id: string;
   title: string;
-  image: string;
+  imageUrl: string;
+  imageAltText: string;
 }

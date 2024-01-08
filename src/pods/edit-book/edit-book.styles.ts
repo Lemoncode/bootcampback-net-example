@@ -35,6 +35,14 @@ export const chipsContainer = css`
   min-width: 100%;
 `;
 
+export const button = css`
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${theme.spacing(1)};
+`;
+
 export const goBack = css`
   align-self: flex-start;
   display: flex;

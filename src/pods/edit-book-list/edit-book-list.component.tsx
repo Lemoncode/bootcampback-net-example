@@ -15,19 +15,24 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { ConfirmationDialog, useConfirmationDialog } from '@/common/components';
+import { useNotificationContext } from '@/core/notification';
 import { switchRoutes } from '@/core/router';
 import { BookVm } from './edit-book-list.vm';
 import * as classes from './edit-book.list.styles';
 
 interface Props {
   bookList: BookVm[];
+  onDelete: (id: string) => void;
 }
 
 export const EditBookListComponent: React.FC<Props> = props => {
-  const { bookList } = props;
+  const { bookList, onDelete } = props;
   const [currentBookList, setCurrentBookList] = React.useState<BookVm[]>(bookList); // [1
   const [filteredBookList, setFilteredBookList] = React.useState(bookList);
   const navigate = useNavigate();
+  const { notify } = useNotificationContext();
+  const { isOpen, itemToDelete, onOpenDialog, onAccept, onClose } = useConfirmationDialog();
 
   const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -40,7 +45,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
   };
 
   const handleAddBook = () => {
-    navigate(switchRoutes.addBook);
+    navigate(switchRoutes.createBook);
   };
 
   const handleEditBook = (id: string) => {
@@ -48,8 +53,8 @@ export const EditBookListComponent: React.FC<Props> = props => {
   };
 
   const handleDeleteBook = (id: string) => {
-    const newList = currentBookList.filter(book => book.id !== id);
-    setCurrentBookList(newList);
+    onDelete(id);
+    onAccept();
   };
 
   React.useEffect(() => {
@@ -73,7 +78,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
       </label>
       <Input id="filterInput" onChange={handleFilter} placeholder="Filtrar por título..." />
 
-      <IconButton className={classes.addBook} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
+      <IconButton className={classes.add} onClick={handleAddBook} aria-label="Añadir nuevo libro" size="large">
         <Typography variant="caption" component={'span'}>
           Añadir libro
         </Typography>
@@ -104,7 +109,7 @@ export const EditBookListComponent: React.FC<Props> = props => {
                       <EditIcon />
                     </IconButton>
                     <IconButton
-                      onClick={() => handleDeleteBook(book.id)}
+                      onClick={() => onOpenDialog({ id: book.id, name: book.title })}
                       aria-label={`borrar ${book.title}`}
                       size="large"
                     >
@@ -117,6 +122,19 @@ export const EditBookListComponent: React.FC<Props> = props => {
           </Table>
         </TableContainer>
       </main>
+      {isOpen && (
+        <ConfirmationDialog
+          isOpen={isOpen}
+          labels={{ acceptButton: 'Aceptar', closeButton: 'Cerrar' }}
+          onAccept={() => handleDeleteBook(itemToDelete.id)}
+          onClose={onClose}
+          title="Eliminar"
+        >
+          <Typography variant="body1">
+            ¿Seguro que quiere borrar <strong>{itemToDelete.name}</strong>?
+          </Typography>
+        </ConfirmationDialog>
+      )}
     </div>
   );
 };

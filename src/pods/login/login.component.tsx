@@ -2,17 +2,47 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 import { useAuthContext } from '@/core/auth';
-import { switchRoutes } from '@/core/router';
+import { Credentials, CredentialsErrors, createEmptyCredentials, createEmptyCredentialsError } from './login.vm';
+import { formValidation } from './login.validations';
 import * as classes from './login.styles';
 
-export const LoginComponent: React.FC = () => {
+export const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setIsUserLogged } = useAuthContext();
 
-  const handleSubmit = e => {
+  const [formData, setFormData] = React.useState<Credentials>(createEmptyCredentials);
+  const [errors, setErrors] = React.useState<CredentialsErrors>(createEmptyCredentialsError);
+
+  const validateForm = () =>
+    formValidation.validateForm(formData).then(validationResult => {
+      setErrors(validationResult.fieldErrors as unknown as CredentialsErrors);
+      return validationResult.succeeded;
+    });
+
+  const validateField = (field: keyof Credentials) =>
+    formValidation.validateField(field, formData[field]).then(validationResult => {
+      setErrors({
+        ...errors,
+        [field]: validationResult,
+      });
+    });
+
+  const handleOnFieldChange = (field: keyof Credentials) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    validateField(field);
+    setFormData({
+      ...formData,
+      [field]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsUserLogged(true);
-    navigate(switchRoutes.dashboard);
+    validateForm().then(isValid => {
+      if (isValid) {
+        setIsUserLogged(true);
+        navigate(-1);
+      }
+    });
   };
 
   return (
@@ -26,9 +56,11 @@ export const LoginComponent: React.FC = () => {
             className={classes.input}
             fullWidth
             label="Correo Electrónico"
-            type="email"
             variant="outlined"
-            required
+            error={!errors.email.succeeded}
+            helperText={errors.email.message}
+            onChange={handleOnFieldChange('email')}
+            autoComplete="off"
           />
           <TextField
             className={classes.input}
@@ -36,7 +68,9 @@ export const LoginComponent: React.FC = () => {
             label="Contraseña"
             type="password"
             variant="outlined"
-            required
+            error={!errors.password.succeeded}
+            helperText={errors.password.message}
+            onChange={handleOnFieldChange('password')}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Iniciar Sesión

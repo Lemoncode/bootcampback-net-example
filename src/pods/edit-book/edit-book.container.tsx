@@ -1,26 +1,40 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { getBookInfo, updateBook } from './api';
-import { mapBookInfoFromApiToVm } from './edit-book.mappers';
-import { createEmptyBook } from './edit-book.vm';
-import { EditBookComponent } from './edit-book.component';
+import { useNavigate } from 'react-router-dom';
+import { Lookup } from '@/common/models';
+import { useNotificationContext } from '@/core/notification';
+import { EditBook } from './edit-book.component';
+import { mapActhorListFromApiToVm, mapBookFromApiToVm, mapBookFromVmToApi } from './edit-book.mappers';
+import { BookVm, createEmptyBook } from './edit-book.vm';
+import * as api from './api';
 
-export const EditBook: React.FC = () => {
-  const [bookInfo, setBookInfo] = React.useState(createEmptyBook());
-  const { id } = useParams();
+interface Props {
+  id: string;
+}
 
-  const loadBookInfo = async () => {
-    try {
-      const bookInfo = await getBookInfo(id);
-      setBookInfo(mapBookInfoFromApiToVm(bookInfo));
-    } catch (error) {
-      throw error;
-    }
-  };
+export const EditBookContainer: React.FC<Props> = props => {
+  const { id } = props;
+  const navigate = useNavigate();
+  const { notify } = useNotificationContext();
+  const [authorList, setAuthorList] = React.useState<Lookup[]>([]);
+  const [book, setBook] = React.useState<BookVm>(createEmptyBook());
+
+  const handleSubmit = (newBook: BookVm) =>
+    api
+      .saveBook(mapBookFromVmToApi(newBook))
+      .then(() => notify('Libro guardado correctamente', 'success'))
+      .then(() => navigate(-1))
+      .catch(() => notify('Error al guardar el libro', 'error'));
+
+  const loadData = async () => await api.getActhorList().then(mapActhorListFromApiToVm).then(setAuthorList);
+
+  const loadBook = async () => await api.getBook(id).then(mapBookFromApiToVm).then(setBook);
 
   React.useEffect(() => {
-    loadBookInfo();
-  }, []);
+    loadData();
+    if (id) {
+      loadBook();
+    }
+  }, [id]);
 
-  return <EditBookComponent book={bookInfo} updateBook={updateBook} />;
+  return <EditBook onSubmit={handleSubmit} authorList={authorList} book={book} />;
 };

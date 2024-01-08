@@ -31,8 +31,8 @@ export const card = css`
   justify-content: center;
   align-items: center;
   gap: 16px;
-  width: 150px;
-  height: 150px;
+  width: 300px;
+  height: 300px;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
@@ -50,6 +50,6 @@ export const card = css`
 `;
 
 export const cardIcon = css`
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
 `;

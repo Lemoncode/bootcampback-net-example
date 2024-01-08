@@ -23,6 +23,21 @@ export const root = css`
   }
 `;
 
+export const row = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const iconContainer = css`
+  display: flex;
+`;
+
+export const icon = css`
+  font-size: 1.5rem;
+  cursor: pointer;
+`;
+
 export const title = css`
   font-size: 42px;
   font-weight: bold;
