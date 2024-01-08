@@ -64,8 +64,7 @@ export const EditBook: React.FC<Props> = props => {
 
   const handleOnFieldChange = (field: keyof BookVm) => (e: React.ChangeEvent<HTMLInputElement>, value?: Lookup[]) => {
     validateField(field);
-    if (Boolean(!value)) return setFormData({ ...formData, [field]: e.target.value });
-    setFormData({ ...formData, [field]: value });
+    value ? setFormData({ ...formData, [field]: value }) : setFormData({ ...formData, [field]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
