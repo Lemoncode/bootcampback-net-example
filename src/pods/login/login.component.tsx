@@ -1,14 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Paper, TextField, Typography } from '@mui/material';
-import { useAuthContext } from '@/core/auth';
+import { FaGoogle } from 'react-icons/fa';
+import { useAuth } from '@/core/auth';
+import { switchRoutes } from '@/core/router';
 import { Credentials, CredentialsErrors, createEmptyCredentials, createEmptyCredentialsError } from './login.vm';
 import { formValidation } from './login.validations';
 import * as classes from './login.styles';
 
-export const Login: React.FC = () => {
+interface Props {
+  onLogin: (credentials: Credentials) => Promise<void>;
+}
+
+export const Login: React.FC<Props> = props => {
   const navigate = useNavigate();
-  const { setIsUserLogged } = useAuthContext();
+  // const { setIsUserLogged } = useAuthContext();
+
+  const { onLogin } = props;
 
   const [formData, setFormData] = React.useState<Credentials>(createEmptyCredentials);
   const [errors, setErrors] = React.useState<CredentialsErrors>(createEmptyCredentialsError);
@@ -39,10 +47,17 @@ export const Login: React.FC = () => {
     e.preventDefault();
     validateForm().then(isValid => {
       if (isValid) {
-        setIsUserLogged(true);
-        navigate(-1);
+        onLogin(formData).then(result => {
+          // setIsUserLogged(true);
+          // navigate(-1);
+          console.log(result);
+        });
       }
     });
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = switchRoutes.loginGoogle;
   };
 
   return (
@@ -76,6 +91,13 @@ export const Login: React.FC = () => {
             Iniciar Sesión
           </Button>
         </form>
+        <Button
+          variant="contained"
+          aria-label="Iniciar sesión con Google"
+          fullWidth
+          startIcon={<FaGoogle />}
+          onClick={handleGoogleLogin}
+        />
       </Paper>
     </div>
   );

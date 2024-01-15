@@ -1,4 +1,5 @@
 import React from 'react';
+import { User, useAuth } from '@/core/auth';
 import { useNotificationContext } from '@/core/notification';
 import { mapBookFromApiToVm, mapReviewFromVmToApi, mapReviewListFromApiToVm } from './book.mappers';
 import { BookVm, createEmptyBook, Review } from './book.vm';
@@ -12,6 +13,7 @@ interface Props {
 export const BookContainer: React.FC<Props> = props => {
   const { id } = props;
   const { notify } = useNotificationContext();
+  const { user } = useAuth();
 
   const [book, setBook] = React.useState<BookVm>(createEmptyBook);
   const [reviews, setReviews] = React.useState<Review[]>([]);
@@ -26,7 +28,7 @@ export const BookContainer: React.FC<Props> = props => {
 
   const handleSaveReview = (review: Review) =>
     api
-      .saveReview(mapReviewFromVmToApi(review))
+      .saveReview(mapReviewFromVmToApi(review, user))
       .then(() => {
         notify('Reseña guardada con éxito', 'success');
         loadData();

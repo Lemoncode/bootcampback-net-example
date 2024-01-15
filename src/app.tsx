@@ -5,12 +5,13 @@ import { NotificationProvider } from '@/core/notification';
 import { RouterComponent } from '@/core/router';
 import { ThemeProviderComponent } from '@/core/theme';
 import './app.global-styles';
+import { BookListScene } from './scenes';
 
 const App: React.FC = () => {
   return (
     <ThemeProviderComponent>
       <NotificationProvider>
-        <AuthProvider>
+        <AuthProvider BookList={BookListScene}>
           <SpinnerComponent />
           <RouterComponent />
         </AuthProvider>

@@ -5,13 +5,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import UserIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/ExitToApp';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { useAuthContext } from '@/core/auth';
+import { useAuth } from '@/core/auth';
 import { switchRoutes } from '@/core/router';
 import * as classes from './app-bar.styles';
 
 export const AppBarComponent: React.FC = () => {
   const navigate = useNavigate();
-  const { isUserLogged, setIsUserLogged } = useAuthContext();
+  const { isUserLogged, setIsUserLogged } = useAuth();
 
   const handleClick = () => {
     setIsUserLogged(false);

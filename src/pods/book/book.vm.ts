@@ -10,7 +10,7 @@ export interface Review {
 export const createEmptyReview = (): Review => ({
   id: undefined,
   bookId: '',
-  reviewer: 'Usuario Anónimo',
+  reviewer: '',
   reviewText: '',
   creationDate: undefined,
   stars: 0,

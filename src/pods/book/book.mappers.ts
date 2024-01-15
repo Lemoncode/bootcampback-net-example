@@ -1,3 +1,4 @@
+import { User } from '@/core/auth';
 import * as apiModel from './api';
 import * as vm from './book.vm';
 
@@ -14,10 +15,10 @@ export const mapBookFromApiToVm = (book: apiModel.Book): vm.BookVm => ({
   })),
 });
 
-export const mapReviewFromVmToApi = (review: vm.Review): apiModel.Review => ({
+export const mapReviewFromVmToApi = (review: vm.Review, user: User): apiModel.Review => ({
   id: review.id ? parseInt(review.id) : undefined,
   bookId: parseInt(review.bookId),
-  reviewer: review.reviewer,
+  reviewer: `${user.givenName} ${user.familyName}`,
   reviewText: review.reviewText,
   creationDate: review.creationDate ? new Date(review.creationDate).toISOString() : undefined,
   stars: review.stars,

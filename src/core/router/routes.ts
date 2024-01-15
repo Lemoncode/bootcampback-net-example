@@ -1,6 +1,7 @@
 interface SwitchRoutes {
   root: string;
   login: string;
+  loginGoogle: string;
   dashboard: string;
   bookList: string;
   createBook: string;
@@ -15,6 +16,7 @@ interface SwitchRoutes {
 export const switchRoutes: SwitchRoutes = {
   root: '/',
   login: '/login',
+  loginGoogle: '/api/ExternalLogin/initiateGoogleSignin',
   dashboard: '/dashboard',
   bookList: '/book-list',
   createBook: '/create-book',

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, IconButton, Typography, Rating } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAuthContext } from '@/core/auth';
+import { useAuth } from '@/core/auth';
 import { EditReview } from './components/edit-review.component';
 import { BookVm, Review, createEmptyReview } from './book.vm';
 import * as classes from './book.styles';
@@ -16,7 +16,7 @@ interface Props {
 
 export const Book: React.FC<Props> = props => {
   const { book, reviews, onSaveReview, onDeleteReview } = props;
-  const { isUserLogged } = useAuthContext();
+  const { isUserLogged } = useAuth();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [editingReview, setEditingReview] = React.useState(createEmptyReview);
 
