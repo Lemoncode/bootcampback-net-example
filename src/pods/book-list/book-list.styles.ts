@@ -31,16 +31,15 @@ export const card = css`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  width: 350px;
-  height: 500px;
+  gap: 8px;
+  width: 250px;
   padding: ${theme.spacing(2)};
 
   .${cardMediaClasses.root} {
-    height: 70%;
-    width: 100%;
     border-radius: 8px;
     background-position: top center;
+    background-size: contain;
+    max-height: 300px;
   }
 
   .${cardActionsClasses.root} {

@@ -11,10 +11,10 @@ import * as classes from './app-bar.styles';
 
 export const AppBarComponent: React.FC = () => {
   const navigate = useNavigate();
-  const { isUserLogged, setIsUserLogged } = useAuth();
+  const { isUserLogged, logout } = useAuth();
 
   const handleClick = () => {
-    setIsUserLogged(false);
+    logout();
     navigate(switchRoutes.root);
   };
 

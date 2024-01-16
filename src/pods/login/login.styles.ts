@@ -7,8 +7,6 @@ export const root = css`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
-  gap: 32px;
-  padding: ${theme.spacing(6)};
 `;
 
 export const paper = css`
@@ -17,8 +15,7 @@ export const paper = css`
   justify-content: center;
   align-items: center;
   gap: 64px;
-  flex-grow: 1;
-  padding: ${theme.spacing(2)};
+  padding: ${theme.spacing(4)};
   max-width: 400px;
   margin: 0 auto;
 

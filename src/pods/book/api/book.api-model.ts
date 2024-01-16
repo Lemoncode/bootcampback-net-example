@@ -3,7 +3,7 @@ export interface Review {
   bookId: number;
   reviewer: string;
   reviewText: string;
-  creationDate: string;
+  creationDate: Date;
   stars: number;
 }
 export interface ReviewParams {

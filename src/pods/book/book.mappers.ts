@@ -20,7 +20,7 @@ export const mapReviewFromVmToApi = (review: vm.Review, user: User): apiModel.Re
   bookId: parseInt(review.bookId),
   reviewer: `${user.givenName} ${user.familyName}`,
   reviewText: review.reviewText,
-  creationDate: review.creationDate ? new Date(review.creationDate).toISOString() : undefined,
+  creationDate: review.creationDate ? new Date(review.creationDate) : undefined,
   stars: review.stars,
 });
 
