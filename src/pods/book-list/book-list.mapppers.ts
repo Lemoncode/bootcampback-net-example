@@ -1,4 +1,4 @@
-import * as apiModel from '@/core/mocks';
+import * as apiModel from './api';
 import * as vm from './book-list.vm';
 
 export const mapBookListFromApiToVm = (bookList: apiModel.Book[]): vm.BookVm[] =>

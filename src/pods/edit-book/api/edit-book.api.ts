@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Author, EditAuthorListResponse } from '@/core/mocks';
+import { Author, EditAuthorListResponse } from './edit-book.api-model';
 import { Book, SaveBook } from './edit-book.api-model';
 
 export const saveBook = async (book: SaveBook): Promise<boolean> => {

@@ -1,4 +1,4 @@
-import { Author } from '@/core/mocks';
+import { Author } from './api';
 import { Lookup } from '@/common/models';
 import { BookVm } from './edit-book.vm';
 import { Book, SaveBook } from './api';

@@ -23,10 +23,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const [user, setUser] = React.useState<User>();
 
-  const logout = () => {
-    setIsUserLogged(false);
-    setUser(null);
-  };
+  const logout = () =>
+    api
+      .logout()
+      .then(() => setIsUserLogged(false))
+      .finally(() => setUser(null));
 
   React.useEffect(() => {
     api
