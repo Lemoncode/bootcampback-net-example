@@ -12,6 +12,7 @@ interface Props {
 
 export const BookContainer: React.FC<Props> = props => {
   const { id } = props;
+  console.log('BookContainer', id);
   const { notify } = useNotificationContext();
   const { user } = useAuth();
 
@@ -28,7 +29,7 @@ export const BookContainer: React.FC<Props> = props => {
 
   const handleSaveReview = (review: Review) =>
     api
-      .saveReview(mapReviewFromVmToApi(review, user))
+      .saveReview(mapReviewFromVmToApi(review, user), id)
       .then(() => {
         notify('Reseña guardada con éxito', 'success');
         loadData();

@@ -13,10 +13,10 @@ export const getReviewsById = async (id: string): Promise<ReviewParams> => {
   return data;
 };
 
-export const saveReview = async (review: Review): Promise<boolean> => {
-  const baseUrl = '/api/reviews';
-
-  review.id ? await axios.put<boolean>(`${baseUrl}`, review) : await axios.post<boolean>(`${baseUrl}`, review);
+export const saveReview = async (review: Review, id: string): Promise<boolean> => {
+  review.id
+    ? await axios.put<boolean>(`/api/books/${id}/reviews`, review)
+    : await axios.post<boolean>(`/api/books/${id}/reviews`, review);
 
   return true;
 };
