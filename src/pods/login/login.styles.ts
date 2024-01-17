@@ -24,6 +24,12 @@ export const paper = css`
   }
 `;
 
+export const buttonGroup = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${theme.spacing(4)};
+`;
+
 export const input = css`
   margin-bottom: ${theme.spacing(2)};
 `;

@@ -12,7 +12,6 @@ interface Props {
 
 export const BookContainer: React.FC<Props> = props => {
   const { id } = props;
-  console.log('BookContainer', id);
   const { notify } = useNotificationContext();
   const { user } = useAuth();
 
@@ -36,9 +35,9 @@ export const BookContainer: React.FC<Props> = props => {
       })
       .catch(() => notify('Error al guardar la reseña', 'error'));
 
-  const handleDeleteReview = (id: string) =>
+  const handleDeleteReview = (reviewId: string, bookId: string) =>
     api
-      .deleteReview(id)
+      .deleteReview(reviewId, bookId)
       .then(() => {
         notify('Reseña eliminada con éxito', 'success');
         loadData();

@@ -98,6 +98,7 @@ export const EditBook: React.FC<Props> = props => {
           value={formData.title}
           id="title"
           onChange={handleOnFieldChange('title')}
+          onBlur={() => validateField('title')}
           label="Título"
           variant="outlined"
           error={!errors.title.succeeded}
@@ -141,6 +142,7 @@ export const EditBook: React.FC<Props> = props => {
             value={formData.imageAltText}
             id="imageAltText"
             onChange={handleOnFieldChange('imageAltText')}
+            onBlur={() => validateField('imageAltText')}
             label="Descripción de la imagen"
             variant="outlined"
             error={!errors.imageAltText.succeeded}
@@ -156,6 +158,7 @@ export const EditBook: React.FC<Props> = props => {
         id="description"
         value={formData.description}
         onChange={handleOnFieldChange('description')}
+        onBlur={() => validateField('description')}
         label="Descripción del libro"
         variant="outlined"
         minRows={4}

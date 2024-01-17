@@ -2,6 +2,7 @@ interface SwitchRoutes {
   root: string;
   login: string;
   loginGoogle: string;
+  loginMicrosoft: string;
   dashboard: string;
   bookList: string;
   createBook: string;
@@ -17,6 +18,7 @@ export const switchRoutes: SwitchRoutes = {
   root: '/',
   login: '/login',
   loginGoogle: '/api/ExternalLogin/initiateGoogleSignin',
+  loginMicrosoft: '/api/ExternalLogin/initiateMicrosoftSignin',
   dashboard: '/dashboard',
   bookList: '/book-list',
   createBook: '/create-book',

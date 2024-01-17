@@ -46,6 +46,7 @@ export const EditReview: React.FC<Props> = props => {
           label="Escribe aquí tu reseña"
           fullWidth
           variant="standard"
+          autoComplete="off"
           onChange={event => setFormReview({ ...formReview, reviewText: event.target.value })}
           aria-label="Campo de texto para crear o editar la reseña"
         />

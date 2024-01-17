@@ -11,7 +11,7 @@ interface Props {
   book: BookVm;
   reviews: Review[];
   onSaveReview: (review: Review) => void;
-  onDeleteReview: (id: string) => void;
+  onDeleteReview: (reviewId: string, bookId: string) => void;
 }
 
 export const Book: React.FC<Props> = props => {
@@ -69,7 +69,7 @@ export const Book: React.FC<Props> = props => {
                       <IconButton aria-label="Editar reseña" onClick={() => handleEdit(review)}>
                         <EditIcon className={classes.icon} />
                       </IconButton>
-                      <IconButton aria-label="Borrar reseña" onClick={() => onDeleteReview(review.id)}>
+                      <IconButton aria-label="Borrar reseña" onClick={() => onDeleteReview(review.id, book.id)}>
                         <DeleteIcon className={classes.icon} />
                       </IconButton>
                     </div>

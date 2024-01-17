@@ -7,5 +7,9 @@ export const LoginContainer: React.FC = () => {
     window.location.href = switchRoutes.loginGoogle;
   };
 
-  return <Login onLogin={handleGoogleLogin} />;
+  const handeMicrosoftLogin = () => {
+    window.location.href = switchRoutes.loginMicrosoft;
+  };
+
+  return <Login onLoginGoogle={handleGoogleLogin} onLoginMicrosoft={handeMicrosoftLogin} />;
 };

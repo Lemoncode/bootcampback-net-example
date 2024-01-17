@@ -75,6 +75,7 @@ export const EditAuthor: React.FC<Props> = props => {
             value={formData.firstName}
             id="firstname"
             onChange={handleOnFieldChange('firstName')}
+            onBlur={() => validateField('firstName')}
             label="Nombre"
             variant="outlined"
             aria-describedby="firstNameError"
@@ -91,6 +92,7 @@ export const EditAuthor: React.FC<Props> = props => {
             value={formData.lastName}
             id="lastname"
             onChange={handleOnFieldChange('lastName')}
+            onBlur={() => validateField('lastName')}
             label="Apellidos"
             variant="outlined"
             aria-describedby="lastNameError"
